@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 11
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympleLib", "SympleLib\SympleLib.csproj", "{72C853C9-1A24-4B46-90DA-1B1706532309}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympleTests", "SympleTests\SympleTests.csproj", "{397772F3-B7DE-4B0F-B063-CBC2EF26479D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C853C9-1A24-4B46-90DA-1B1706532309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C853C9-1A24-4B46-90DA-1B1706532309}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
