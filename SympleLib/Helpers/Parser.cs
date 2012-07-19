@@ -6,29 +6,42 @@ using System.Text;
 
 namespace SympleLib.Helpers
 {
-    public class Parser
+    public static class StringHelpers
     {
-        public static T Parse<T>(string thingToParse)
-        {
-            var retType = typeof(T);
-            var tParse = retType.GetMethod("TryParse", 
-                BindingFlags.Public | BindingFlags.Static, null, 
-                new[] { typeof(string), retType.MakeByRefType()}, null);
+        //-- Parsing
 
-            if(tParse != null)
+        public static T Parse<T>(this string thingToParse)
+        {
+            var retType = typeof (T);
+            var tParse = retType.GetMethod("TryParse",
+                                           BindingFlags.Public | BindingFlags.Static, null,
+                                           new[] {typeof (string), retType.MakeByRefType()}, null);
+
+            if (tParse != null)
             {
-                var parameters = new object[] { thingToParse, null };
-                var success = (bool)tParse.Invoke(null, parameters);
+                var parameters = new object[] {thingToParse, null};
+                var success = (bool) tParse.Invoke(null, parameters);
                 if (success)
                 {
-                    return (T)parameters[1];
-                }                
+                    return (T) parameters[1];
+                }
             }
 
             return default(T);
         }
 
-        public static T Parse<T>(string thingToParse, Func<string, T> parser)
+        public static T Parse<T>(this string thingToParse, Func<string, T> parser)
         {
+            return parser.Invoke(thingToParse);
+        }
+    
+    
+        //-- NUll Check 
+
+        public static bool IsNotEmpty(this string stringToCheck)
+        {
+            return string.IsNullOrEmpty(stringToCheck) != true;
+        }
+
     }
 }

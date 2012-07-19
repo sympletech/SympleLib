@@ -1,11 +1,43 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 11
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympleLib", "SympleLib\SympleLib.csproj", "{72C853C9-1A24-4B46-90DA-1B1706532309}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympleTests", "SympleTests\SympleTests.csproj", "{397772F3-B7DE-4B0F-B063-CBC2EF26479D}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SympleJSLib", "http://localhost:39686", "{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.PhysicalPath = "SympleJSLib\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_39686"
+		DefaultWebSiteLanguage = "Visual C#"
+		Release.AspNetCompiler.Debug = "False"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.PhysicalPath = "SympleJSLib\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.VirtualPath = "/localhost_39686"
+		SlnRelativePath = "SympleJSLib\"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		UseIISExpress = "true"
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccAuxPath0 = http://ca100netopsdev:8080/tfs/netops
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccLocalPath0 = SympleLib
+		SccNumberOfProjects = 1
+		SccProjectName0 = $/TeamMgmtCalendarFuture/SympleLib
+		SccProjectUniqueName0 = SympleLib\\SympleLib.csproj
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://ca100netopsdev:8080/tfs/netops
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -15,6 +47,10 @@ Global
 		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72C853C9-1A24-4B46-90DA-1B1706532309}.Release|Any CPU.ActiveCfg = Release|Any CPU

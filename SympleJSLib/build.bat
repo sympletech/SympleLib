@@ -1,0 +1,1 @@
+Packer -o sympleLib_min.js -m jsmin Source\*
