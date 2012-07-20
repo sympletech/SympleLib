@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using SympleLib.Helpers;
 
-namespace SympleLib.MVC.Helpers
+namespace SympleLib.Helpers.MVC
 {
     public class KendoUiHelper
     {
@@ -15,17 +15,31 @@ namespace SympleLib.MVC.Helpers
             var sortOrd = request["sort[0][dir]"];
             var sortOn = request["sort[0][field]"];
 
-            var results = collection.Select(x => x);
+            IOrderedQueryable<T> results = collection.Select(x => x).OrderBy("id");
             if (sortOn.IsNotEmpty())
             {
                 results = sortOrd == "desc" ? results.OrderByDescending(sortOn) : results.OrderBy(sortOn);
             }
 
-            results = results.Skip(skip).Take(take);
+            //Convert Null Entries in String to ""
+            var gridData = results.Skip(skip).Take(take);
+            foreach(var gData in gridData)
+            {
+                typeof(T).GetProperties().ToList().ForEach(p=>
+                    {
+                        if (p.PropertyType == typeof(String))
+                        {
+                            if(p.GetValue(gData, null) == null)
+                            {
+                                p.SetValue(gData, "", null);
+                            }
+                        }
+                    });
+            }
 
             return new KendoGridResult<T>
             {
-                Items = results,
+                Items = gridData,
                 TotalCount = collection.Count()
             };
         }

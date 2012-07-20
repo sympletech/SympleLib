@@ -55,10 +55,10 @@
     <Compile Include="Helpers\Encryptor.cs" />
     <Compile Include="Helpers\Parser.cs" />
     <Compile Include="Helpers\DynamicSorter.cs" />
-    <Compile Include="MVC\Helpers\HtmlHelpers.cs" />
-    <Compile Include="MVC\Helpers\ListToSelectList.cs" />
-    <Compile Include="MVC\Helpers\PageableSearchResults.cs" />
-    <Compile Include="MVC\Helpers\KendoUiHelper.cs" />
+    <Compile Include="Helpers\MVC\HtmlHelpers.cs" />
+    <Compile Include="Helpers\MVC\ListToSelectList.cs" />
+    <Compile Include="Helpers\MVC\PageableSearchResults.cs" />
+    <Compile Include="Helpers\MVC\KendoUiHelper.cs" />
     <Compile Include="OpenXML\LinqToXLSWorker.cs" />
     <Compile Include="OpenXML\XLSRow.cs" />
     <Compile Include="OpenXML\XLSStyle.cs" />
