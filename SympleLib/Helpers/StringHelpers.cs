@@ -43,5 +43,10 @@ namespace SympleLib.Helpers
             return string.IsNullOrEmpty(stringToCheck) != true;
         }
 
+        public static bool IsEmpty(this string stringToCheck)
+        {
+            return string.IsNullOrEmpty(stringToCheck);
+        }
+
     }
 }

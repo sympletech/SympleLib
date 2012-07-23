@@ -53,7 +53,7 @@
     <Compile Include="Helpers\Emailer.cs" />
     <Compile Include="Helpers\EmailValidator.cs" />
     <Compile Include="Helpers\Encryptor.cs" />
-    <Compile Include="Helpers\Parser.cs" />
+    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\DynamicSorter.cs" />
     <Compile Include="Helpers\MVC\HtmlHelpers.cs" />
     <Compile Include="Helpers\MVC\ListToSelectList.cs" />

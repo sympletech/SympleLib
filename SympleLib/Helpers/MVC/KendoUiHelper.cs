@@ -15,13 +15,23 @@ namespace SympleLib.Helpers.MVC
             var sortOrd = request["sort[0][dir]"];
             var sortOn = request["sort[0][field]"];
 
-            IOrderedQueryable<T> results = collection.Select(x => x).OrderBy("id");
-            if (sortOn.IsNotEmpty())
+            IOrderedQueryable<T> results;
+            if(sortOrd.IsNotEmpty())
             {
-                results = sortOrd == "desc" ? results.OrderByDescending(sortOn) : results.OrderBy(sortOn);
+                results = sortOrd == "desc" ? collection.OrderByDescending(sortOn) : collection.OrderBy(sortOn);
+            }else
+            {
+                if (collection is IOrderedQueryable<T>)
+                {
+                    results = collection as IOrderedQueryable<T>;
+                }
+                else
+                {
+                    results = collection.Select(x => x).OrderBy("id");
+                }                
             }
 
-            //Convert Null Entries in String to ""
+            //Convert Null Entries in String to "" (if not kendoui grid lists NULL Values as "NULL" in grids)
             var gridData = results.Skip(skip).Take(take);
             foreach(var gData in gridData)
             {
