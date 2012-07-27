@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SympleLib.Helpers;
 
-namespace SympleLib.Helpers.MVC
+namespace SympleLib.MVC
 {
     public class KendoUiHelper
     {

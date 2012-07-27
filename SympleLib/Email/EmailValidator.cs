@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace SympleLib.Helpers
+namespace SympleLib.Email
 {
     public class EmailValidator
     {

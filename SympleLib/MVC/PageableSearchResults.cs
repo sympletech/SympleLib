@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace SympleLib.Helpers.MVC
+namespace SympleLib.MVC
 {
     public class PageableSearchResults<T> where T : class
     {

@@ -1,10 +1,7 @@
 ﻿//Taken From http://blog.cincura.net/229310-sorting-in-iqueryable-using-string-as-column-name/
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace SympleLib.Helpers
 {

@@ -2,7 +2,7 @@
 using System.Net.Mail;
 using System.Text;
 
-namespace SympleLib.Helpers
+namespace SympleLib.Email
 {
     public class Emailer : MailMessage
     {

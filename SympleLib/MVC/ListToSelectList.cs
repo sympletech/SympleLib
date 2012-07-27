@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace SympleLib.Helpers.MVC
+namespace SympleLib.MVC
 {
     public class ListToSelectList
     {

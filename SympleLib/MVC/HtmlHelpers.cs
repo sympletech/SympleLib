@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SympleLib.Helpers.MVC
+namespace SympleLib.MVC
 {
     public static class HtmlHelpers
     {

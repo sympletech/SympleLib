@@ -50,15 +50,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\Emailer.cs" />
-    <Compile Include="Helpers\EmailValidator.cs" />
+    <Compile Include="Helpers\DateTimeHelpers.cs" />
+    <Compile Include="Email\Emailer.cs" />
+    <Compile Include="Email\EmailValidator.cs" />
     <Compile Include="Helpers\Encryptor.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\DynamicSorter.cs" />
-    <Compile Include="Helpers\MVC\HtmlHelpers.cs" />
-    <Compile Include="Helpers\MVC\ListToSelectList.cs" />
-    <Compile Include="Helpers\MVC\PageableSearchResults.cs" />
-    <Compile Include="Helpers\MVC\KendoUiHelper.cs" />
+    <Compile Include="MVC\HtmlHelpers.cs" />
+    <Compile Include="MVC\ListToSelectList.cs" />
+    <Compile Include="MVC\PageableSearchResults.cs" />
+    <Compile Include="MVC\KendoUiHelper.cs" />
+    <Compile Include="Network\NetworkTools.cs" />
     <Compile Include="OpenXML\LinqToXLSWorker.cs" />
     <Compile Include="OpenXML\XLSRow.cs" />
     <Compile Include="OpenXML\XLSStyle.cs" />

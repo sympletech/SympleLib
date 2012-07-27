@@ -48,5 +48,6 @@ namespace SympleLib.Helpers
             return string.IsNullOrEmpty(stringToCheck);
         }
 
+        
     }
 }
