@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
 using ClosedXML.Excel;
 
 namespace SympleLib.OpenXML
@@ -136,6 +132,7 @@ namespace SympleLib.OpenXML
             this.HeaderRowNum = headerRowNum;
             this.CurrentSheet.ShowRowColHeaders = !noHeaderRow;
             this._columns = null;
+            this._rows = null;
         }
 
         #endregion
