@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace SympleLib.Helpers
 {
     public static class StringHelpers
     {
+        
         //-- Parsing
 
         public static T Parse<T>(this string thingToParse)
         {
             var retType = typeof (T);
-            var tParse = retType.GetMethod("TryParse",
-                                           BindingFlags.Public | BindingFlags.Static, null,
-                                           new[] {typeof (string), retType.MakeByRefType()}, null);
+            if(KnownParsers.ContainsKey(retType) != true)
+            {
+                KnownParsers[retType] = retType.GetMethod("TryParse",
+                                                          BindingFlags.Public | BindingFlags.Static, null,
+                                                          new[] {typeof (string), retType.MakeByRefType()}, null);
+            }
+            MethodInfo tParse = KnownParsers[retType];
 
             if (tParse != null)
             {
@@ -34,8 +37,14 @@ namespace SympleLib.Helpers
         {
             return parser.Invoke(thingToParse);
         }
-    
-    
+
+        private static Dictionary<Type, MethodInfo> _knownParsers;
+        public static Dictionary<Type, MethodInfo> KnownParsers
+        {
+            get { return _knownParsers ?? (_knownParsers = new Dictionary<Type, MethodInfo>()); }
+            set { _knownParsers = value; }
+        }
+
         //-- NUll Check 
 
         public static bool IsNotEmpty(this string stringToCheck)
