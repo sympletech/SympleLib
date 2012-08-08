@@ -42,6 +42,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ClosedXML.dll</HintPath>
     </Reference>
+    <Reference Include="Cobisi.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b863a804c9b2bdb0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EmailVerify.NET\Cobisi.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Cobisi.EmailVerify, Version=4.6.1.0, Culture=neutral, PublicKeyToken=b863a804c9b2bdb0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EmailVerify.NET\Cobisi.EmailVerify.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DocumentFormat.OpenXml.dll</HintPath>
