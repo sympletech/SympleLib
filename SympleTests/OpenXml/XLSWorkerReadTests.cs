@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using SympleLib.OpenXML;
+using SympleLib.OpenXml;
 
 namespace SympleTests.OpenXml
 {

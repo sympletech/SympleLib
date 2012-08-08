@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\StringHelperTests.cs" />
+    <Compile Include="OpenXml\ObjectsToXlsTests.cs" />
     <Compile Include="OpenXml\XLSWorkerReadTests.cs" />
     <Compile Include="OpenXml\XLSWorkerWriteTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using ClosedXML.Excel;
 
-namespace SympleLib.OpenXML
+namespace SympleLib.OpenXml
 {
     public class XLSWorker
     {
@@ -335,6 +335,13 @@ namespace SympleLib.OpenXML
         {
             this.WorkBook.SaveAs(path);
             this.WorkBookPath = path;
+        }
+
+        public Stream GetFileStream()
+        {
+            Stream outPutStream = new MemoryStream();
+            this.WorkBook.SaveAs(outPutStream);
+            return outPutStream;
         }
 
         #endregion

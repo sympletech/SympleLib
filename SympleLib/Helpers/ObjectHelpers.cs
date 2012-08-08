@@ -16,7 +16,7 @@ namespace SympleLib.Helpers
             foreach (PropertyInfo sourceProperty in sourceType.GetProperties())
             {
                 //Skip if in the exclude list
-                if (excludeProps.Contains(sourceProperty.Name) != true && UpCastApprovedTypes.Contains(sourceProperty.PropertyType))
+                if (excludeProps.Contains(sourceProperty.Name) != true && NativeTypes.Contains(sourceProperty.PropertyType))
                 {
                     var sourcePropertyValue = sourceProperty.GetValue(baseObject, null);
                     if (sourcePropertyValue != null)
@@ -34,7 +34,7 @@ namespace SympleLib.Helpers
             return result;
         }
 
-        private static List<Type> UpCastApprovedTypes
+        public static List<Type> NativeTypes
         {
             get
             {
