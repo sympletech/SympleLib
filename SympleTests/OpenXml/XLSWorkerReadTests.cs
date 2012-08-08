@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using NUnit.Framework;
-using SympleLib.OpenXML;
+using SympleLib.OpenXml;
 
 namespace SympleTests.OpenXml
 {

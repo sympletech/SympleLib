@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
 
-namespace SympleLib.OpenXML
+namespace SympleLib.OpenXml
 {
     public class XLSStyle
     {

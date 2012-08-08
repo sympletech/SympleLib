@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 
-namespace SympleLib.OpenXML.Reader
+namespace SympleLib.OpenXml.Reader
 {
     public class OpenXLRow
     {

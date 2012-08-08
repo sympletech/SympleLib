@@ -67,7 +67,7 @@
     <Compile Include="MVC\PageableSearchResults.cs" />
     <Compile Include="MVC\KendoUiHelper.cs" />
     <Compile Include="Network\NetworkTools.cs" />
-    <Compile Include="OpenXML\LinqToXLSWorker.cs" />
+    <Compile Include="OpenXML\ObjectsToXls.cs" />
     <Compile Include="OpenXML\XLSRow.cs" />
     <Compile Include="OpenXML\XLSStyle.cs" />
     <Compile Include="OpenXML\XLSWorker.cs" />

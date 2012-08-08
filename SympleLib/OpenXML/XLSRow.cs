@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using ClosedXML.Excel;
 
 
-namespace SympleLib.OpenXML
+namespace SympleLib.OpenXml
 {
     public class XLSRow
     {

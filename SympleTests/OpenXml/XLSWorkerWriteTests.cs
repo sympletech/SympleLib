@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
 using NUnit.Framework;
-using SympleLib.OpenXML;
+using SympleLib.OpenXml;
 using System.IO;
 
 namespace SympleTests.OpenXml
@@ -148,5 +148,16 @@ namespace SympleTests.OpenXml
             tWorker.Save();            
         }
 
+
+
+        [Test]
+        public void ObjectToXlsTest()
+        {
+            ObjectsToXls ob2xl = new ObjectsToXls(@"c:\obj2xlstest.xls");
+            ob2xl.AddSheet(SympleTests.OpenXml.ObjectsToXlsTests.TestObject.Collection, "Test Objects");
+            ob2xl.Save();
+
+            Assert.IsTrue(File.Exists(@"c:\obj2xlstest.xls"));
+        }
     }
 }
