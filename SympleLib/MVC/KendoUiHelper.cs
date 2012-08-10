@@ -8,18 +8,18 @@ namespace SympleLib.MVC
 {
     public class KendoUiHelper
     {
-        public static KendoGridResult<T> ParseGridData<T>(IQueryable<T> collection, HttpRequestBase request)
+        public static KendoGridResult<T> ParseGridData<T>(IQueryable<T> collection)
         {
-            var skip = request["skip"].Parse<int>();
-            var take = request["take"].Parse<int>();
-
-            var sortOrd = request["sort[0][dir]"];
-            var sortOn = request["sort[0][field]"];
-
+            return ParseGridData<T>(collection, new KendoGridPost());
+        }
+        public static KendoGridResult<T> ParseGridData<T>(IQueryable<T> collection, KendoGridPost requestParams)
+        {
             IOrderedQueryable<T> results;
-            if(sortOrd.IsNotEmpty())
+            if(requestParams.SortOrd.IsNotEmpty())
             {
-                results = sortOrd == "desc" ? collection.OrderByDescending(sortOn) : collection.OrderBy(sortOn);
+                results = requestParams.SortOrd == "desc" 
+                    ? collection.OrderByDescending(requestParams.SortOn) 
+                    : collection.OrderBy(requestParams.SortOn);
             }else
             {
                 if (collection is IOrderedQueryable<T>)
@@ -33,7 +33,7 @@ namespace SympleLib.MVC
             }
 
             //Convert Null Entries in String to "" (if not kendoui grid lists NULL Values as "NULL" in grids)
-            var gridData = results.Skip(skip).Take(take);
+            var gridData = results.Skip(requestParams.Skip).Take(requestParams.Take);
             foreach(var gData in gridData)
             {
                 typeof(T).GetProperties().ToList().ForEach(p=>

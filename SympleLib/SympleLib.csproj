@@ -71,6 +71,7 @@
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\DynamicSorter.cs" />
     <Compile Include="MVC\HtmlHelpers.cs" />
+    <Compile Include="MVC\KendoGridPost.cs" />
     <Compile Include="MVC\ListToSelectList.cs" />
     <Compile Include="MVC\PageableSearchResults.cs" />
     <Compile Include="MVC\KendoUiHelper.cs" />
