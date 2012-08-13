@@ -1,0 +1,138 @@
+﻿<style type="text/css">
+     .hoverable:hover {
+         background: azure;
+         cursor: pointer;
+     }
+ </style>
+
+<script type="text/javascript">
+    $(function () {
+        var grid = $("#data-grid").sympleTech_KendoGrid(
+        {
+            dataSourceURL: "/Grid/DataSource/",
+            model : {
+                fields: {
+                    BirthDate: { type: "date" }
+                }
+            },
+            columns: [
+                { field: "id" },
+                { field: "LastName", title:"Last Name", filterable: true, sortable: true },
+                { field: "FirstName", filterable: true, sortable: true },
+                { field: "City", filterable: true, sortable: true },
+                { field: "State", filterable: true, sortable: true },
+                { field: "BirthDate", filterable: true, sortable: true, format: "{0:MM/dd/yy}" },
+                { field: "IsAlive", filterable: true, sortable: true }
+            ],
+            pagesize: 10,
+            rowSelectable : true,
+            onRowSelected : function (id) {
+                alert(id);
+            },
+            searchForm: 'frmSearch'
+        });
+     });
+
+
+    $.fn.sympleTech_KendoGrid = function (options) {
+        
+        var settings = $.extend({
+            'dataSourceURL': '',
+            'model':{
+                id: 'id',
+                fields: {}
+            },
+            'columns': [],
+            'pagesize': 10,
+            'rowSelectable' : true,
+            'onRowSelected': function (id) { },
+            'searchForm': ''
+        }, options);
+
+         return this.each(function () {
+             //-- Data Source 
+             var gridDataSource = new kendo.data.DataSource({
+                 transport: {
+                     read: {
+                         url: settings.dataSourceURL,
+                         type: "POST"
+                     }
+                 },
+                 schema: {
+                     data: function (data) {
+                         return data.Items;
+                     },
+                     model: settings.model,
+                     total: function (data) {
+                         return data.TotalCount;
+                     }
+                 },
+                 serverSorting: true,
+                 serverFiltering: true,
+                 serverPaging: true,
+                 pageSize: settings.pagesize
+             });
+             
+             //-- Kendo Grid
+             var grid = $(this).kendoGrid({
+                 dataSource: gridDataSource,
+                 pageable: {
+                     refresh: true,
+                     pageSizes: true
+                 },
+                 sortable: true,
+                 selectable: (settings.rowSelectable == true) ? "row" : "",
+                 change: function (arg) {
+                     var selected = $.map(this.select(), function (item) {
+                         return $(item).find('td').first().text();
+                     });
+                     settings.onRowSelected(selected);
+                 },
+                 columns: settings.columns,
+                 dataBound: function (e) {
+                     //Hide The First Column (the primary Key )
+                     //Have to do this so you can then read it on the row select
+                     $(".k-grid .k-grid-header colgroup col").first().remove();
+                     $(".k-grid .k-grid-content colgroup col").first().remove();
+                     $(".k-grid thead th").first().hide();
+                     $(".k-grid-content tbody tr").each(function () {
+                         $(this).find('td').first().hide();
+                         if(settings.rowSelectable == true) {
+                             $(this).addClass('hoverable');
+                         }
+                     });
+                 }
+             });
+             
+             //-- Search Form
+             if (settings.searchForm != '') {
+                 var sForm = $("#" + settings.searchForm);
+                 sForm.submit(function (e) {
+                     e.preventDefault();
+                     var formData = sForm.serialize().split('&');
+                     var params = {
+                         page: 1,
+                         pageSize: settings.pagesize
+                     };
+                     $(formData).each(function () {
+                         var nvp = this.split('=');
+                         params[nvp[0]] = nvp[1];
+                     });
+
+                     grid.data("kendoGrid").dataSource.query(params);
+                 });
+             }
+
+             return grid;
+         });
+     };
+
+ </script>
+
+<div id="data-grid"></div>
+
+<form id="frmSearch">
+    <input type="text" name="search"/>
+    <input type="text" name="search2"/>
+    <input type="submit" class="btn btn-mini" value="Search"/>
+</form>

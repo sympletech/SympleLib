@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Class for grid hovering -->
+<style type="text/css">
+     .hoverable:hover {
+         background: azure;
+         cursor: pointer;
+     }
+ </style>
+
+<script type="text/javascript">
+    $(function () {
+        var grid = $("#data-grid").sympleTech_KendoGrid(
+        {
+            dataSourceURL: "/KendoGrid/DataSource/",
+            model : {
+                fields: {
+                    BirthDate: { type: "date" }
+                }
+            },
+            columns: [
+                { field: "id" },
+                { field: "LastName", title:"Last Name", filterable: true, sortable: true },
+                { field: "FirstName", filterable: true, sortable: true },
+                { field: "City", filterable: true, sortable: true },
+                { field: "State", filterable: true, sortable: true },
+                { field: "BirthDate", filterable: true, sortable: true, format: "{0:MM/dd/yy}" },
+                { field: "IsAlive", filterable: true, sortable: true }
+            ],
+            pagesize: 10,
+            rowSelectable : true,
+            onRowSelected : function (id) {
+                alert(id);
+            },
+            searchForm: 'frmSearch'
+        });
+    });        
+</script>
+
+
+
+<h2>sympleTech_KendoGrid.js Tests</h2>
+
+<div id="data-grid"></div>
+
+<form id="frmSearch">
+    <input type="text" name="search"/>
+    <input type="submit" class="btn btn-mini" value="Search"/>
+</form>

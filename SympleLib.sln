@@ -26,6 +26,28 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SympleJSLib", "http://local
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		UseIISExpress = "true"
 	EndProjectSection
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.PhysicalPath = "SympleJSLib\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_39686"
+		DefaultWebSiteLanguage = "Visual C#"
+		Release.AspNetCompiler.Debug = "False"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.PhysicalPath = "SympleJSLib\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.VirtualPath = "/localhost_39686"
+		SlnRelativePath = "SympleJSLib\"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		UseIISExpress = "true"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympleTestsJS", "SympleTestsJS\SympleTestsJS.csproj", "{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +63,10 @@ Global
 		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72C853C9-1A24-4B46-90DA-1B1706532309}.Release|Any CPU.ActiveCfg = Release|Any CPU
