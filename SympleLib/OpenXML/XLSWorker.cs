@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Web;
 using ClosedXML.Excel;
 
 namespace SympleLib.OpenXml
@@ -27,11 +29,13 @@ namespace SympleLib.OpenXml
 
         #region Constructors
 
-        /// <summary>
-        /// No Public Constructor -- Use Static Builders
-        /// </summary>
-        private XLSWorker()
+        public XLSWorker()
         {
+            this.WorkBook = new XLWorkbook();
+
+            //this.WorkBook.Worksheets.Add("Sheet1");
+            this.WorkSheets = this.WorkBook.Worksheets;
+            this.CurrentSheet = this.WorkSheets.FirstOrDefault();
         }
 
         /// <summary>
@@ -74,8 +78,6 @@ namespace SympleLib.OpenXml
         /// <returns></returns>        
         public static XLSWorker Create(string path, bool overwrite)
         {
-            //REF: http://msdn.microsoft.com/en-us/library/ff478153.aspx
-            
             if(File.Exists(path))
             {
                 if(!overwrite)
@@ -84,15 +86,10 @@ namespace SympleLib.OpenXml
                 }
             }
 
-            var xWorker = new XLSWorker
+            var xWorker = new XLSWorker()
             {
                 WorkBookPath = path,
-                WorkBook = new XLWorkbook()
             };
-
-            xWorker.WorkBook.Worksheets.Add("Sheet1");
-            xWorker.WorkSheets = xWorker.WorkBook.Worksheets;
-            xWorker.CurrentSheet = xWorker.WorkSheets.FirstOrDefault();
 
             return xWorker;
         }
@@ -337,11 +334,38 @@ namespace SympleLib.OpenXml
             this.WorkBookPath = path;
         }
 
-        public Stream GetFileStream()
+        public Stream SaveToMemoryStream()
         {
             Stream outPutStream = new MemoryStream();
             this.WorkBook.SaveAs(outPutStream);
             return outPutStream;
+        }
+
+        public void WriteToHttpResponse(string fileName)
+        {
+            //TODO: Make this not use a real file!  -- Looser.
+            var tempDir = HttpContext.Current.Server.MapPath("/temp/");
+
+            var delThread = new Thread((x) =>
+                {
+                    var files = Directory.GetFiles(tempDir);
+                    foreach (var f in files)
+                    {
+                        var fInfo = new FileInfo(f);
+                        if(fInfo.CreationTime < DateTime.Now.AddHours(-1))
+                        {
+                            File.Delete(f);
+                        }
+                    }
+                });
+            delThread.Start();
+
+            this.SaveAs(tempDir + fileName);
+
+            HttpContext.Current.Response.ContentType = "application/ms-excel";
+            HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+            HttpContext.Current.Response.WriteFile(tempDir + fileName);
         }
 
         #endregion

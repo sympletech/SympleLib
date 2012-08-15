@@ -37,7 +37,6 @@ $.fn.sympleTech_ajaxform = function (options) {
         'errorMessageTarget': '',
         'fieldErrorClass': 'field-error',
         'beforeSubmit': function (valState) { },
-        'postData': $(this).serialize(),
         'action': $(this).attr("action"),
         'onComplete': function (data) { }
 
@@ -72,7 +71,7 @@ $.fn.sympleTech_ajaxform = function (options) {
             settings.beforeSubmit(validationState);
             checkRequiredFields(this);
             if (validationState.isValid) {
-                $.post(settings.action, settings.postData, function (data) {
+                $.post(settings.action, $(this).serialize(), function (data) {
                     settings.onComplete(data);
                     settings.showHideLoaderMethod(false);
                 });

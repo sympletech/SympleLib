@@ -8,8 +8,12 @@ namespace SympleLib.Helpers
     {
         
         //-- Parsing
-
         public static T Parse<T>(this string thingToParse)
+        {
+            return thingToParse.Parse<T>(default(T));
+        }
+        
+        public static T Parse<T>(this string thingToParse, T defaultValue)
         {
             var retType = typeof (T);
             if(KnownParsers.ContainsKey(retType) != true)
@@ -30,7 +34,7 @@ namespace SympleLib.Helpers
                 }
             }
 
-            return default(T);
+            return defaultValue;
         }
 
         public static T Parse<T>(this string thingToParse, Func<string, T> parser)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using SympleLib.MVC;
 
@@ -17,9 +16,13 @@ namespace SympleTestsJS.Controllers
             return View();
         }
 
-        public JsonResult DataSource(string search)
+        public JsonResult DataSource(string search, bool? testBox)
         {
             var people = Person.PeopleCollection.AsQueryable();
+            if(testBox == true)
+            {
+                people = people.Take(4);
+            }
             if (string.IsNullOrEmpty(search) != true)
             {
                 people = people.Where(x => x.LastName.Contains(search));
@@ -28,7 +31,6 @@ namespace SympleTestsJS.Controllers
             var dataSource = KendoUiHelper.ParseGridData<Person>(people);
             return Json(dataSource, JsonRequestBehavior.AllowGet);
         }
-
     }
 
     public class Person
@@ -41,11 +43,21 @@ namespace SympleTestsJS.Controllers
         public DateTime BirthDate { get; set; }
         public bool IsAlive { get; set; }
 
-        public static List<Person> PeopleCollection
+        public static IEnumerable<Person> PeopleCollection
         {
             get
             {
                 var people = new List<Person>();
+                people.Add(new Person { LastName = null, FirstName = "John", City = "Johnson", State = "NB", BirthDate = DateTime.Parse("1/1/1950"), IsAlive = true });
+                people.Add(new Person { LastName = "Hankok", FirstName = "John", City = "Pennsylivania", State = "PN", BirthDate = DateTime.Parse("2/1/1980"), IsAlive = true });
+                people.Add(new Person { LastName = "Mayfield", FirstName = "Curtis", City = "SoulTown", State = "NO", BirthDate = DateTime.Parse("1/1/1950"), IsAlive = true });
+                people.Add(new Person { LastName = "Wooten", FirstName = "Victor", City = "Salem", State = "OR", BirthDate = DateTime.Parse("1/1/1950"), IsAlive = true });
+                people.Add(new Person { LastName = "Saw", FirstName = "Tenor", City = "Seattle", State = "WA", BirthDate = DateTime.Parse("1/1/1950"), IsAlive = true });
+                people.Add(new Person { LastName = "Johnson", FirstName = "James", City = "SanFransico", State = "CA", BirthDate = DateTime.Parse("1/1/1950") });
+                people.Add(new Person { LastName = "Lewis", FirstName = "Daniel", City = "Banning", State = "CA", BirthDate = DateTime.Parse("1/1/1950") });
+                people.Add(new Person { LastName = "Lara", FirstName = "Heather", City = "Beaumont", State = "CA", BirthDate = DateTime.Parse("1/1/1950") });
+                people.Add(new Person { LastName = "Jager", FirstName = "Mic", City = "Detroit", State = "MI", BirthDate = DateTime.Parse("1/1/1950") });
+                people.Add(new Person { LastName = "Rock", FirstName = "Kid", City = "Detroit", State = "MI", BirthDate = DateTime.Parse("1/1/1950") });
                 people.Add(new Person { LastName = "Smith", FirstName = "John", City = "Johnson", State = "NB", BirthDate = DateTime.Parse("1/1/1950"), IsAlive = true });
                 people.Add(new Person { LastName = "Hankok", FirstName = "John", City = "Pennsylivania", State = "PN", BirthDate = DateTime.Parse("2/1/1980"), IsAlive = true });
                 people.Add(new Person { LastName = "Mayfield", FirstName = "Curtis", City = "SoulTown", State = "NO", BirthDate = DateTime.Parse("1/1/1950"), IsAlive = true });
@@ -62,7 +74,7 @@ namespace SympleTestsJS.Controllers
                     people[i].id = i;
                 }
 
-                return people;
+                return people.OrderBy(x=>x.LastName);
             }
         }
     }

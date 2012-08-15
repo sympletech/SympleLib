@@ -12,9 +12,12 @@
 
 <script type="text/javascript">
     $(function () {
+        //$("#frmSearch").sympleTech_ajaxform({ });
+
         var grid = $("#data-grid").sympleTech_KendoGrid(
         {
-            dataSourceURL: "/KendoGrid/DataSource/",
+            dataSourceURL: "/KendoGrid/DataSource/?test=1",
+            exportURL: "/KendoGrid/Export/",
             model : {
                 fields: {
                     BirthDate: { type: "date" }
@@ -22,14 +25,14 @@
             },
             columns: [
                 { field: "id" },
-                { field: "LastName", title:"Last Name", filterable: true, sortable: true },
+                { field: "LastName", title: "Last Name", filterable: true, sortable: true, width: 300 },
                 { field: "FirstName", filterable: true, sortable: true },
                 { field: "City", filterable: true, sortable: true },
                 { field: "State", filterable: true, sortable: true },
                 { field: "BirthDate", filterable: true, sortable: true, format: "{0:MM/dd/yy}" },
                 { field: "IsAlive", filterable: true, sortable: true }
             ],
-            pagesize: 10,
+            pagesize: 16,
             rowSelectable : true,
             onRowSelected : function (id) {
                 alert(id);
@@ -45,7 +48,8 @@
 
 <div id="data-grid"></div>
 
-<form id="frmSearch">
-    <input type="text" name="search"/>
+<form id="frmSearch" style="padding: 25px;" class="well">
+    <input type="text" name="search"/><br/>
+    Checkbox Test @Html.CheckBox("TestBox")<br/>
     <input type="submit" class="btn btn-mini" value="Search"/>
 </form>

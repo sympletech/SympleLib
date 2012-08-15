@@ -10,6 +10,11 @@ namespace SympleLib.OpenXml
     {
         protected XLSWorker xWorker;
 
+        public ObjectsToXls()
+        {
+            xWorker = new XLSWorker();
+        }
+
         public ObjectsToXls(string saveTo)
         {
             xWorker = XLSWorker.Create(saveTo, true);
@@ -77,7 +82,12 @@ namespace SympleLib.OpenXml
 
         public Stream GetFileStream()
         {
-            return xWorker.GetFileStream();
+            return xWorker.SaveToMemoryStream();
+        }
+
+        public void WriteToHttpResponse(string fileName)
+        {
+            xWorker.WriteToHttpResponse(fileName);
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using DocumentFormat.OpenXml.Bibliography;
+using PagedList;
 using SympleLib.Helpers;
+using SympleLib.OpenXml;
 
 namespace SympleLib.MVC
 {
@@ -14,38 +15,42 @@ namespace SympleLib.MVC
         }
         public static KendoGridResult<T> ParseGridData<T>(IQueryable<T> collection, KendoGridPost requestParams)
         {
-            IOrderedQueryable<T> results;
-            if(requestParams.SortOrd.IsNotEmpty())
+            if (requestParams.Export.IsNotEmpty())
             {
-                results = requestParams.SortOrd == "desc" 
-                    ? collection.OrderByDescending(requestParams.SortOn) 
-                    : collection.OrderBy(requestParams.SortOn);
+                ReturnXlsExport<T>(collection, requestParams);                
             }else
             {
-                if (collection is IOrderedQueryable<T>)
-                {
-                    results = collection as IOrderedQueryable<T>;
-                }
-                else
-                {
-                    results = collection.Select(x => x).OrderBy("id");
-                }                
+                return ReturnGridData<T>(requestParams, ref collection);                
             }
 
-            //Convert Null Entries in String to "" (if not kendoui grid lists NULL Values as "NULL" in grids)
-            var gridData = results.Skip(requestParams.Skip).Take(requestParams.Take);
-            foreach(var gData in gridData)
+            return null;
+        }
+  
+        
+        private static void ReturnXlsExport<T>(IQueryable<T> collection, KendoGridPost requestParams)
+        {
+            var o2x = new ObjectsToXls();
+            o2x.AddSheet((IEnumerable<object>)collection, requestParams.Export);
+            o2x.WriteToHttpResponse(requestParams.Export + ".xlsx");
+        }
+  
+        private static KendoGridResult<T> ReturnGridData<T>(KendoGridPost requestParams, ref IQueryable<T> collection)
+        {
+            if (requestParams.SortOrd.IsNotEmpty())
             {
-                typeof(T).GetProperties().ToList().ForEach(p=>
-                    {
-                        if (p.PropertyType == typeof(String))
-                        {
-                            if(p.GetValue(gData, null) == null)
-                            {
-                                p.SetValue(gData, "", null);
-                            }
-                        }
-                    });
+                collection = requestParams.SortOrd == "desc"
+                             ? collection.OrderByDescending(requestParams.SortOn)
+                             : collection.OrderBy(requestParams.SortOn);
+            }
+            IPagedList<T> gridData;
+            try
+            {
+                gridData = collection.ToPagedList(requestParams.Page, requestParams.PageSize);
+            }
+            catch
+            {
+                collection = collection.Select(x => x).OrderBy("id");
+                gridData = collection.ToPagedList(requestParams.Page, requestParams.PageSize);
             }
 
             return new KendoGridResult<T>
@@ -54,6 +59,7 @@ namespace SympleLib.MVC
                 TotalCount = collection.Count()
             };
         }
+
 
         public class KendoGridResult<T>
         {

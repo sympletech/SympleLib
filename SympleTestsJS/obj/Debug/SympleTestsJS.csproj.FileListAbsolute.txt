@@ -51,6 +51,7 @@ F:\Projects\SympleLib\SympleTestsJS\bin\System.Web.Razor.dll
 F:\Projects\SympleLib\SympleTestsJS\bin\System.Web.WebPages.Deployment.dll
 F:\Projects\SympleLib\SympleTestsJS\bin\System.Web.WebPages.dll
 F:\Projects\SympleLib\SympleTestsJS\bin\System.Web.WebPages.Razor.dll
+F:\Projects\SympleLib\SympleTestsJS\bin\PagedList.dll
 F:\Projects\SympleLib\SympleTestsJS\bin\ClosedXML.xml
 F:\Projects\SympleLib\SympleTestsJS\bin\DocumentFormat.OpenXml.xml
 F:\Projects\SympleLib\SympleTestsJS\bin\SympleLib.pdb
@@ -65,5 +66,7 @@ F:\Projects\SympleLib\SympleTestsJS\bin\System.Web.WebPages.xml
 F:\Projects\SympleLib\SympleTestsJS\bin\System.Web.WebPages.Deployment.xml
 F:\Projects\SympleLib\SympleTestsJS\bin\System.Web.WebPages.Razor.xml
 F:\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.csprojResolveAssemblyReference.cache
+F:\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.Properties.Resources.resources
+F:\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.csproj.GenerateResource.Cache
 F:\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.dll
 F:\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.pdb
