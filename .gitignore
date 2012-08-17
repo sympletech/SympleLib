@@ -4,3 +4,5 @@
 /SympleTests/bin
 /SympleTests/obj
 _ReSharper.SympleLib
+/SympleTestsJS/bin
+/SympleTestsJS/obj
