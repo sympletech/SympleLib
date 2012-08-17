@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Web;
 using ClosedXML.Excel;
 
@@ -346,19 +345,19 @@ namespace SympleLib.OpenXml
             //TODO: Make this not use a real file!  -- Looser.
             var tempDir = HttpContext.Current.Server.MapPath("/temp/");
 
-            var delThread = new Thread((x) =>
-                {
-                    var files = Directory.GetFiles(tempDir);
-                    foreach (var f in files)
-                    {
-                        var fInfo = new FileInfo(f);
-                        if(fInfo.CreationTime < DateTime.Now.AddHours(-1))
-                        {
-                            File.Delete(f);
-                        }
-                    }
-                });
-            delThread.Start();
+            //var delThread = new Thread((x) =>
+            //    {
+            //        var files = Directory.GetFiles(tempDir);
+            //        foreach (var f in files)
+            //        {
+            //            var fInfo = new FileInfo(f);
+            //            if(fInfo.CreationTime < DateTime.Now.AddHours(-1))
+            //            {
+            //                File.Delete(f);
+            //            }
+            //        }
+            //    });
+            //delThread.Start();
 
             this.SaveAs(tempDir + fileName);
 

@@ -64,6 +64,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
         //-- Kendo Grid
         var grid = $(this).kendoGrid({
             dataSource: gridDataSource,
+            autoBind: false,
             pageable: {
                 refresh: true,
                 pageSize: settings.pagesize,
@@ -122,6 +123,9 @@ $.fn.sympleTech_KendoGrid = function (options) {
 
                 grid.data("kendoGrid").dataSource.query(params);
             });
+            $Form.submit();
+        }else {
+            grid.data("kendoGrid").dataSource.read();
         }
 
         return grid;
