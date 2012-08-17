@@ -19,12 +19,33 @@ $.fn.sympleTech_KendoGrid = function (options) {
     }, options);
 
     return this.each(function () {
+        //Bind the datasource to the linked form
+        var formParams = {};
+        if (settings.searchForm != "") {
+            var $Form = $("#" + settings.searchForm);
+            var formData = $Form.serialize().split('&');
+
+            $(formData).each(function () {
+                var nvp = this.split('=');
+                formParams[nvp[0]] = function () {
+                    var $inputEl = $Form.find('#' + nvp[0]).first();
+
+                    if ($inputEl.attr("type") == "checkbox") {
+                        return $inputEl.is(':checked');
+                    }
+
+                    return $Form.find('#' + nvp[0]).first().val();
+                };
+            });
+        }
+
         //-- Data Source 
         var gridDataSource = new kendo.data.DataSource({
             transport: {
                 read: {
                     url: settings.dataSourceURL,
-                    type: "POST"
+                    type: "POST",
+                    data: formParams
                 }
             },
             schema: {
@@ -37,7 +58,6 @@ $.fn.sympleTech_KendoGrid = function (options) {
                 }
             },
             serverSorting: true,
-            serverFiltering: true,
             serverPaging: true,
             pageSize: settings.pagesize
         });
@@ -64,7 +84,6 @@ $.fn.sympleTech_KendoGrid = function (options) {
         //-- Kendo Grid
         var grid = $(this).kendoGrid({
             dataSource: gridDataSource,
-            autoBind: false,
             pageable: {
                 refresh: true,
                 pageSize: settings.pagesize,
@@ -102,31 +121,6 @@ $.fn.sympleTech_KendoGrid = function (options) {
                 });
             }
         });
-
-        //-- Search Form
-        if (settings.searchForm != '') {
-            var $Form = $("#" + settings.searchForm);
-            $Form.submit(function (e) {
-                e.preventDefault();
-                var formData = $Form.serialize().split('&');
-                var params = {
-                    page: 1,
-                    pageSize: settings.pagesize
-                };
-
-                $(formData).each(function () {
-                    var nvp = this.split('=');
-                    if (params[nvp[0]] != "true") {
-                        params[nvp[0]] = nvp[1];
-                    }
-                });
-
-                grid.data("kendoGrid").dataSource.query(params);
-            });
-            $Form.submit();
-        }else {
-            grid.data("kendoGrid").dataSource.read();
-        }
 
         return grid;
     });

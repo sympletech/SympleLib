@@ -98,3 +98,11 @@ C:\Users\Daniel\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.Propert
 C:\Users\Daniel\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.csproj.GenerateResource.Cache
 C:\Users\Daniel\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.dll
 C:\Users\Daniel\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.pdb
+F:\Projects\SympleLib\SympleTestsJS\bin\Raven.Client.Lightweight.dll
+F:\Projects\SympleLib\SympleTestsJS\bin\Raven.Abstractions.dll
+F:\Projects\SympleLib\SympleTestsJS\bin\NLog.dll
+F:\Projects\SympleLib\SympleTestsJS\bin\Raven.Client.Lightweight.pdb
+F:\Projects\SympleLib\SympleTestsJS\bin\Raven.Client.Lightweight.xml
+F:\Projects\SympleLib\SympleTestsJS\bin\Raven.Abstractions.pdb
+F:\Projects\SympleLib\SympleTestsJS\bin\Raven.Abstractions.xml
+F:\Projects\SympleLib\SympleTestsJS\bin\NLog.xml
