@@ -9,7 +9,19 @@ namespace SympleLib.RavenDB
 {
     public class DataContext : IDataContext, IDisposable 
     {
-        private readonly IDocumentStore _documentStore;
+        private IDocumentStore _documentStore;
+        public IDocumentStore DocumentStore
+        {
+            get
+            {
+                return _documentStore;
+            }
+            set
+            {
+                _documentStore = value;
+            }
+        }
+        
         private IDocumentSession _session;
         public IDocumentSession Session
         {
@@ -19,11 +31,15 @@ namespace SympleLib.RavenDB
             }
         }
 
-        public DataContext(string connectionStringName)
+        public DataContext(string connectionStringName, int maxMaxNumberOfRequestsPerSession = 30)
         {
             this._documentStore = new DocumentStore
             {
-                ConnectionStringName = connectionStringName
+                ConnectionStringName = connectionStringName,
+                Conventions = new DocumentConvention
+                {
+                    MaxNumberOfRequestsPerSession = maxMaxNumberOfRequestsPerSession
+                }
             }.Initialize();
 
             this._session = this._documentStore.OpenSession();
