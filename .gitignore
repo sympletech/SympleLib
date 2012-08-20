@@ -6,3 +6,5 @@
 _ReSharper.SympleLib
 /SympleTestsJS/bin
 /SympleTestsJS/obj
+
+*.suo
