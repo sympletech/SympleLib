@@ -1,15 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Raven.Abstractions.Data;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
 
 namespace SympleLib.RavenDB
 {
-    public class DataContext : IDataContext
+    public class DataContext : IDataContext, IDisposable 
     {
-        private readonly IDocumentStore _documentStore;
+        private IDocumentStore _documentStore;
+        public IDocumentStore DocumentStore
+        {
+            get
+            {
+                return _documentStore;
+            }
+            set
+            {
+                _documentStore = value;
+            }
+        }
+        
         private IDocumentSession _session;
         public IDocumentSession Session
         {
@@ -19,11 +31,15 @@ namespace SympleLib.RavenDB
             }
         }
 
-        public DataContext(string connectionStringName)
+        public DataContext(string connectionStringName, int maxMaxNumberOfRequestsPerSession = 30)
         {
             this._documentStore = new DocumentStore
             {
-                ConnectionStringName = connectionStringName
+                ConnectionStringName = connectionStringName,
+                Conventions = new DocumentConvention
+                {
+                    MaxNumberOfRequestsPerSession = maxMaxNumberOfRequestsPerSession
+                }
             }.Initialize();
 
             this._session = this._documentStore.OpenSession();
@@ -47,32 +63,6 @@ namespace SympleLib.RavenDB
                 {
                     Map = documents => documents.Select(entity => new { })
                 });
-            }
-        }
-
-        /// <summary>
-        /// Attach A Disconnected Data Object To This DataContext
-        /// </summary>
-        /// <param name="dataObj">Object To Attach</param>
-        /// <returns></returns>
-        public void Attach(IDataObject dataObj)
-        {
-            dataObj.Db = this;
-        }
-
-        /// <summary>
-        /// Attach A Collection of Data Objects To This DataContext
-        /// </summary>
-        /// <param name="dataObjCollection">Objects To Attach</param>
-        /// <returns></returns>
-        public void Attach(IEnumerable<IDataObject> dataObjCollection)
-        {
-            if (dataObjCollection != null)
-            {
-                foreach (var dataObject in dataObjCollection)
-                {
-                    dataObject.Db = this;
-                }
             }
         }
 

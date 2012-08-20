@@ -13,6 +13,7 @@ namespace SympleLib.RavenDB
 
         public bool Success { get; set; }
         public string Message { get; set; }
+        public string ObjectID { get; set; }
 
         public Dictionary<string, string> ErrorMessages { get; set; }
 

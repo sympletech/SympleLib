@@ -1,13 +1,49 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
+using SympleLib.Helpers;
 
 namespace SympleLib.Email
 {
     public class Emailer : MailMessage
     {
-        protected string SMTPServer { get; set; }
-        protected int SMTPPort { get; set; }
+        public string SMTPServer { get; set; }
+        public int SMTPPort { get; set; }
+        public string SMTPUserName { get; set; }
+        public string SMTPPassword { get; set; }
+        public bool SMTPSSL { get; set; }
+
+        private SmtpClient _smtpClient;
+        public SmtpClient SMTPClient
+        {
+            get
+            {
+                if (_smtpClient == null)
+                {
+                    _smtpClient = new SmtpClient { 
+                        Host = SMTPServer,
+                        Port = SMTPPort,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        EnableSsl = SMTPSSL
+                    };
+
+                    if (SMTPUserName.IsNotEmpty())
+                    {
+                        _smtpClient.UseDefaultCredentials = false;
+                        _smtpClient.Credentials = new NetworkCredential(SMTPUserName, SMTPPassword);
+                    }
+
+
+                }
+                return _smtpClient;
+            }
+            set
+            {
+                _smtpClient = value;
+            }
+        }
+
         protected string EmailHtmlTemplate { get; set; }
         protected string EmailPlainTemplate { get; set; }
 
@@ -124,8 +160,9 @@ namespace SympleLib.Email
             string bodyTemp = this.Body;
 
             GenerateBody();
-            var smtpClient = new SmtpClient(SMTPServer, SMTPPort);
-            smtpClient.Send(this);
+           
+
+            this.SMTPClient.Send(this);
 
             //Set the body back to it's raw value without formatting 
             //to prevent problems when a message is sent multiple times

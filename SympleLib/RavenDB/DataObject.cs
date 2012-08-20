@@ -7,71 +7,12 @@ namespace SympleLib.RavenDB
 {
     public class DataObject<T> : IDataObject where T : IDataObject
     {
-        //-- Constructors
-        [JsonIgnore]
-        public IDataContext Db { get; set; }
-        public DataObject(IDataContext db)
-        {
-            this.Db = db;
-        }
-
         //-- Properties
 
+        [JsonIgnore]
+        public IDataContext Db { get; set; }
+
         public string Id { get; set; }
-
-        //-- Lookups
-
-        /// <summary>
-        /// Get A Single Object By ID
-        /// </summary>
-        public static T Get(IDataContext db, string id)
-        {
-            var result = db.Session
-                           .Query<T>()
-                           .Customize(x => x.WaitForNonStaleResults(TimeSpan.FromSeconds(5)))
-                           .FirstOrDefault(x => x.Id == id);
-
-            if (result != null)
-            {
-                db.Attach(result);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Get A Single Object By Query
-        /// </summary>
-        public static T Get(IDataContext db, Expression<Func<T, bool>> predicate)
-        {
-            var result = db.Session
-                           .Query<T>()
-                           .Customize(x => x.WaitForNonStaleResults(TimeSpan.FromSeconds(5)))
-                           .FirstOrDefault(predicate);
-
-            if (result != null)
-            {
-                db.Attach(result);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Returns Entire Collection of Objects
-        /// </summary>
-        public static IQueryable<T> GetAll(IDataContext db)
-        {
-            return db.Session.Query<T>();
-        }
-
-        /// <summary>
-        /// Performs a Query agianst the collection
-        /// </summary>
-        public static IQueryable<T> Query(IDataContext db, Expression<Func<T, bool>> predicate)
-        {
-            return db.Session.Query<T>().Where(predicate);
-        }
 
         //-- CRUD
 
@@ -86,6 +27,7 @@ namespace SympleLib.RavenDB
                     Db.Session.Store(this);
                     Db.Session.SaveChanges();
 
+                    result.ObjectID = this.Id;
                     result.Message = "Database Update Completed Successfully";
                 }
             }
