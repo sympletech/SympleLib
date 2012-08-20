@@ -36,6 +36,7 @@ namespace SympleLib.MVC
   
         private static KendoGridResult<T> ReturnGridData<T>(KendoGridPost requestParams, ref IQueryable<T> collection)
         {
+            //If the sort Order is provided perform a sort on the specified column
             if (requestParams.SortOrd.IsNotEmpty())
             {
                 collection = requestParams.SortOrd == "desc"
