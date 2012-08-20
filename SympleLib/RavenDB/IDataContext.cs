@@ -6,9 +6,5 @@ namespace SympleLib.RavenDB
     public interface IDataContext
     {
         IDocumentSession Session { get; }
-
-        void Attach(IDataObject dataObj);
-
-        void Attach(IEnumerable<IDataObject> dataObjCollection);
     }
 }

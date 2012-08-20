@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Raven.Abstractions.Data;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
 
 namespace SympleLib.RavenDB
 {
-    public class DataContext : IDataContext
+    public class DataContext : IDataContext, IDisposable 
     {
         private readonly IDocumentStore _documentStore;
         private IDocumentSession _session;
@@ -47,32 +47,6 @@ namespace SympleLib.RavenDB
                 {
                     Map = documents => documents.Select(entity => new { })
                 });
-            }
-        }
-
-        /// <summary>
-        /// Attach A Disconnected Data Object To This DataContext
-        /// </summary>
-        /// <param name="dataObj">Object To Attach</param>
-        /// <returns></returns>
-        public void Attach(IDataObject dataObj)
-        {
-            dataObj.Db = this;
-        }
-
-        /// <summary>
-        /// Attach A Collection of Data Objects To This DataContext
-        /// </summary>
-        /// <param name="dataObjCollection">Objects To Attach</param>
-        /// <returns></returns>
-        public void Attach(IEnumerable<IDataObject> dataObjCollection)
-        {
-            if (dataObjCollection != null)
-            {
-                foreach (var dataObject in dataObjCollection)
-                {
-                    dataObject.Db = this;
-                }
             }
         }
 
