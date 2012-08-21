@@ -106,3 +106,5 @@ F:\Projects\SympleLib\SympleTestsJS\bin\Raven.Client.Lightweight.xml
 F:\Projects\SympleLib\SympleTestsJS\bin\Raven.Abstractions.pdb
 F:\Projects\SympleLib\SympleTestsJS\bin\Raven.Abstractions.xml
 F:\Projects\SympleLib\SympleTestsJS\bin\NLog.xml
+C:\Users\Daniel\Projects\SympleLib\SympleTestsJS\bin\SympleLib.pdb
+C:\Users\Daniel\Projects\SympleLib\SympleTestsJS\obj\Debug\SympleTestsJS.csprojResolveAssemblyReference.cache

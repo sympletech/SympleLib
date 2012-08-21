@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -64,6 +65,13 @@ namespace SympleLib.Helpers
 
                 return approvedTypes;
             }
+        }
+
+
+        public static T MapTo<T>(this object baseObject)
+        {
+            Mapper.CreateMap(baseObject.GetType(), typeof(T));
+            return Mapper.Map<T>(baseObject);
         }
     }
 }
