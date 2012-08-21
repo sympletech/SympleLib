@@ -14,6 +14,13 @@ namespace SympleLib.RavenDB
 
         public string Id { get; set; }
 
+        //-- ReLoad
+
+        public void Reload()
+        {
+            Db.Session.Advanced.Refresh(this);
+        }
+
         //-- CRUD
 
         public DataObjectOperationResult Save()

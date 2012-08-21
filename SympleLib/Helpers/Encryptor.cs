@@ -130,14 +130,18 @@ namespace SympleLib.Helpers
         /// </summary>
         public static string HashPassword(string plainText)
         {
-            byte[] data = Encoding.ASCII.GetBytes(plainText);
-            byte[] hash = new MD5CryptoServiceProvider().ComputeHash(data);
+            if (plainText.IsNotEmpty())
+            {
+                byte[] data = Encoding.ASCII.GetBytes(plainText);
+                byte[] hash = new MD5CryptoServiceProvider().ComputeHash(data);
 
-            var sbHashedPass = new StringBuilder();
-            foreach (byte b in hash)
-                sbHashedPass.Append(b.ToString("X2"));
+                var sbHashedPass = new StringBuilder();
+                foreach (byte b in hash)
+                    sbHashedPass.Append(b.ToString("X2"));
 
-            return sbHashedPass.ToString();
+                return sbHashedPass.ToString();
+            }
+            return "";
         }
 
     }
