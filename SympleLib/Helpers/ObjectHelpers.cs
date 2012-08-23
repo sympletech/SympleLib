@@ -70,8 +70,33 @@ namespace SympleLib.Helpers
 
         public static T MapTo<T>(this object baseObject)
         {
-            Mapper.CreateMap(baseObject.GetType(), typeof(T));
+            var baseType = baseObject.GetType();
+            var destinationType = typeof(T);
+
+            if (KnownMaps.Any(x => x.Item1 == baseType && x.Item2 == destinationType) != true)
+            {
+                KnownMaps.Add(new Tuple<Type, Type>(baseType, destinationType));
+                Mapper.CreateMap(baseType, destinationType);
+            }
+            
             return Mapper.Map<T>(baseObject);
+        }
+
+        private static List<Tuple<Type, Type>> knownMaps;
+        private static List<Tuple<Type, Type>> KnownMaps
+        {
+            get
+            {
+                if (knownMaps == null)
+                {
+                    knownMaps = new List<Tuple<Type, Type>>();
+                }
+                return knownMaps;
+            }
+            set
+            {
+                knownMaps = value;
+            }
         }
     }
 }

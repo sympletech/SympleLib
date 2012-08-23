@@ -43,6 +43,9 @@ namespace SympleLib.RavenDB
             }.Initialize();
 
             this._session = this._documentStore.OpenSession();
+            
+            //Prevents Stale Records - Makes Raven slower but more trust worthy
+            this._session.Advanced.AllowNonAuthoritativeInformation = false;
         }
 
         /// <summary>

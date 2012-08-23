@@ -5,6 +5,7 @@
 $.fn.sympleTech_KendoGrid = function (options) {
 
     var settings = $.extend({
+        'title': '',
         'dataSourceURL': '',
         'exportName': 'GridData',
         'model': {
@@ -70,6 +71,10 @@ $.fn.sympleTech_KendoGrid = function (options) {
             pageSizeChoices.sort(function (a, b) { return a - b});
         }
         
+        //-- Title Bar
+
+        var titleBar = '<div class="grid-title" style="min-height:20px;">';
+
         //-- Build Export Link
         var exportUrl = settings.dataSourceURL;
         if (exportUrl.indexOf('?') > -1) {
@@ -80,6 +85,11 @@ $.fn.sympleTech_KendoGrid = function (options) {
         exportUrl += "export=" + settings.exportName;
         var exportAnchor = "<a href='" + exportUrl + "' target='_blank'>Export</a>";
 
+        titleBar += '<div style="float:right">' + exportAnchor + "</div>";
+
+        titleBar += '<b>' + settings.title + '</b>';
+
+        titleBar += '</div>';
         
 
         //-- Kendo Grid
@@ -99,7 +109,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
                 });
                 settings.onRowSelected(selected[0]);
             },
-            toolbar: '<div style="text-align:right">'+ exportAnchor +'</div>',
+            toolbar: titleBar,
             columns: settings.columns,
             dataBound: function (e) {
                 //Hide The First Column (the primary Key )
