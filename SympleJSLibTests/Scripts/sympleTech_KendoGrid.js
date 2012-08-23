@@ -23,19 +23,19 @@ $.fn.sympleTech_KendoGrid = function (options) {
         //Bind the datasource to the linked form
         var formParams = {};
         if (settings.searchForm != "") {
-            var $Form = $("#" + settings.searchForm);
-            var formData = $Form.serialize().split('&');
+            var $form = $("#" + settings.searchForm);
+            var formData = $form.serialize().split('&');
 
             $(formData).each(function () {
                 var nvp = this.split('=');
                 formParams[nvp[0]] = function () {
-                    var $inputEl = $Form.find('#' + nvp[0]).first();
+                    var $inputEl = $form.find('*[name=' + nvp[0] + ']').first();
 
                     if ($inputEl.attr("type") == "checkbox") {
                         return $inputEl.is(':checked');
                     }
 
-                    return $Form.find('#' + nvp[0]).first().val();
+                    return $inputEl.val();
                 };
             });
         }
