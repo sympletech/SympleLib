@@ -19,6 +19,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
     }, options);
 
     return this.each(function () {
+
         //Bind the datasource to the linked form
         var formParams = {};
         if (settings.searchForm != "") {
@@ -121,6 +122,14 @@ $.fn.sympleTech_KendoGrid = function (options) {
                 });
             }
         });
+
+        //Bind reload Grid to the form post
+        if (settings.searchForm != "") {
+            $("#" + settings.searchForm).submit(function (e) {
+                e.preventDefault();
+                grid.data("kendoGrid").dataSource.read();
+            });
+        }
 
         return grid;
     });

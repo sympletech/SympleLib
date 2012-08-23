@@ -64,9 +64,6 @@
     <Reference Include="NLog">
       <HintPath>..\packages\RavenDBClient\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="PagedList">
-      <HintPath>..\packages\PagedList.dll</HintPath>
-    </Reference>
     <Reference Include="Raven.Abstractions">
       <HintPath>..\packages\RavenDBClient\Raven.Abstractions.dll</HintPath>
     </Reference>

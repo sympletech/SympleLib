@@ -7,70 +7,29 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympleTests", "SympleTests\
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SympleJSLib", "http://localhost:39686", "{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}"
 	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_39686"
 		Debug.AspNetCompiler.PhysicalPath = "SympleJSLib\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
 		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_39686"
-		DefaultWebSiteLanguage = "Visual C#"
-		Release.AspNetCompiler.Debug = "False"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.PhysicalPath = "SympleJSLib\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.VirtualPath = "/localhost_39686"
-		SlnRelativePath = "SympleJSLib\"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		UseIISExpress = "true"
-	EndProjectSection
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.PhysicalPath = "SympleJSLib\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_39686"
-		DefaultWebSiteLanguage = "Visual C#"
-		Release.AspNetCompiler.Debug = "False"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.PhysicalPath = "SympleJSLib\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.VirtualPath = "/localhost_39686"
-		SlnRelativePath = "SympleJSLib\"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		UseIISExpress = "true"
-	EndProjectSection
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
 		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.PhysicalPath = "SympleJSLib\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_39686"
-		DefaultWebSiteLanguage = "Visual C#"
-		Release.AspNetCompiler.Debug = "False"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_39686"
 		Release.AspNetCompiler.PhysicalPath = "SympleJSLib\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_39686\"
 		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.VirtualPath = "/localhost_39686"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
 		SlnRelativePath = "SympleJSLib\"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		UseIISExpress = "true"
+		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympleTestsJS", "SympleTestsJS\SympleTestsJS.csproj", "{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43} = {547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SympleJSLib", "SympleJSLib", "{097E03AB-E6CC-4A06-A922-237AAFFD928E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympleJSLibTests", "SympleJSLibTests\SympleJSLibTests.csproj", "{9C9E9501-8A3C-4412-94AD-3CC3B3915175}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +37,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C853C9-1A24-4B46-90DA-1B1706532309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C853C9-1A24-4B46-90DA-1B1706532309}.Release|Any CPU.Build.0 = Release|Any CPU
 		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{397772F3-B7DE-4B0F-B063-CBC2EF26479D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -86,16 +49,16 @@ Global
 		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{678B25CA-8172-4A3C-A8E7-6C740DD78CC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72C853C9-1A24-4B46-90DA-1B1706532309}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72C853C9-1A24-4B46-90DA-1B1706532309}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72C853C9-1A24-4B46-90DA-1B1706532309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9E9501-8A3C-4412-94AD-3CC3B3915175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9E9501-8A3C-4412-94AD-3CC3B3915175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9E9501-8A3C-4412-94AD-3CC3B3915175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9E9501-8A3C-4412-94AD-3CC3B3915175}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{547EFB5B-92BA-4D71-8C31-9E1DBEE9AB43} = {097E03AB-E6CC-4A06-A922-237AAFFD928E}
+		{9C9E9501-8A3C-4412-94AD-3CC3B3915175} = {097E03AB-E6CC-4A06-A922-237AAFFD928E}
 	EndGlobalSection
 EndGlobal

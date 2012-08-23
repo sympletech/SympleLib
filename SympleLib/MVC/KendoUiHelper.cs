@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DocumentFormat.OpenXml.Bibliography;
-using PagedList;
 using SympleLib.Helpers;
 using SympleLib.OpenXml;
 
@@ -43,15 +41,16 @@ namespace SympleLib.MVC
                              ? collection.OrderByDescending(requestParams.SortOn)
                              : collection.OrderBy(requestParams.SortOn);
             }
-            IPagedList<T> gridData;
+
+            List<T> gridData;
             try
             {
-                gridData = collection.ToPagedList(requestParams.Page, requestParams.PageSize);
+                gridData = collection.Skip(requestParams.Skip).Take(requestParams.PageSize).ToList();
             }
             catch
             {
                 collection = collection.Select(x => x).OrderBy("id");
-                gridData = collection.ToPagedList(requestParams.Page, requestParams.PageSize);
+                gridData = collection.Skip(requestParams.Skip).Take(requestParams.PageSize).ToList();
             }
 
             return new KendoGridResult<T>
