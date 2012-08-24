@@ -78,7 +78,9 @@ namespace SympleLib.Helpers
                 KnownMaps.Add(new Tuple<Type, Type>(baseType, destinationType));
                 Mapper.CreateMap(baseType, destinationType);
             }
-            
+
+            var test = Mapper.Map(baseObject, destinationType);
+
             return Mapper.Map<T>(baseObject);
         }
 
