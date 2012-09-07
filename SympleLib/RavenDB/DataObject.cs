@@ -47,11 +47,32 @@ namespace SympleLib.RavenDB
             return result;
         }
 
-        public void Delete()
+        public DataObjectOperationResult Delete()
         {
-            Db.Session.Delete(this);
-            Db.Session.SaveChanges();
-            this.Id = null;
+            try
+            {
+                Db.Session.Delete(this);
+                Db.Session.SaveChanges();
+
+                var results = new DataObjectOperationResult
+                {
+                    Message = "Object Has Been Deleted",
+                    ObjectID = this.Id,
+                    Success = true
+                };
+
+                this.Id = null;
+
+                return results;
+            }
+            catch (Exception Ex)
+            {
+                return new DataObjectOperationResult { 
+                    Success = false,
+                    Message = Ex.Message
+                };
+            }
+
         }
     }
 }
