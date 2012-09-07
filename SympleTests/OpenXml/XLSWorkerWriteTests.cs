@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using ClosedXML.Excel;
 using NUnit.Framework;
@@ -12,6 +13,7 @@ namespace SympleTests.OpenXml
     class XLSWorkerWriteTests
     {
         readonly string _testSource = System.IO.Path.GetFullPath(@"OpenXml\");
+        //string _testSource = @"OpenXml\";
 
         public XLSWorker CreateTestWorker(string TestName)
         {
@@ -148,7 +150,30 @@ namespace SympleTests.OpenXml
             tWorker.Save();            
         }
 
+        [Test]
+        public void OpenSheetSetSheetTwoWriteTest()
+        {
+            var fName = "OpenSheetSetSheetTwoWriteTest";
 
+            var tWorker = CreateTestWorker(fName);
+            tWorker.AddNewSheet("SheetTwo");
+            for (int i = 0; i < 50; i++)
+            {
+                var tRow = tWorker.AddNewRow();
+                tRow[1].Value = i;
+            }
+
+            tWorker.Save();
+
+            var xWorker = XLSWorker.Open(tWorker.WorkBookPath);
+            xWorker.SetActiveSheet("SheetTwo");
+            foreach (var xRow in xWorker.Rows)
+            {
+                xRow[2].Value = "Test";
+            }
+
+            xWorker.Save();
+        }
 
         [Test]
         public void ObjectToXlsTest()
