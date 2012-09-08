@@ -1,0 +1,4 @@
+C:\Users\Daniel\Projects\Flutter\packages\AspNetUploadSamples\UploadHelper\bin\Release\Krystalware.UploadHelper.dll
+C:\Users\Daniel\Projects\Flutter\packages\AspNetUploadSamples\UploadHelper\bin\Release\Krystalware.UploadHelper.pdb
+C:\Users\Daniel\Projects\Flutter\packages\AspNetUploadSamples\UploadHelper\obj\Release\Krystalware.UploadHelper.dll
+C:\Users\Daniel\Projects\Flutter\packages\AspNetUploadSamples\UploadHelper\obj\Release\Krystalware.UploadHelper.pdb

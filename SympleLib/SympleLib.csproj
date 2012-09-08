@@ -60,6 +60,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="fastJSON">
+      <HintPath>..\packages\fastJSON v2.0.2\fastJSON\bin\Debug\fastJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="Krystalware.UploadHelper">
+      <HintPath>..\packages\UploadHelper\UploadHelper\bin\Release\Krystalware.UploadHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NLog">
       <HintPath>..\packages\RavenDBClient\NLog.dll</HintPath>
@@ -100,6 +106,7 @@
     <Compile Include="MVC\ListToSelectList.cs" />
     <Compile Include="MVC\PageableSearchResults.cs" />
     <Compile Include="MVC\KendoUiHelper.cs" />
+    <Compile Include="Network\HttpTools.cs" />
     <Compile Include="Network\NetworkTools.cs" />
     <Compile Include="OpenXML\ObjectsToXls.cs" />
     <Compile Include="OpenXML\XLSRow.cs" />

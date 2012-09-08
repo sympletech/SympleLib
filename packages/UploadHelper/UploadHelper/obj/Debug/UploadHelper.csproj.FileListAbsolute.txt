@@ -1,0 +1,5 @@
+C:\Users\Daniel\Projects\Flutter\packages\AspNetUploadSamples\UploadHelper\bin\Debug\Krystalware.UploadHelper.dll
+C:\Users\Daniel\Projects\Flutter\packages\AspNetUploadSamples\UploadHelper\bin\Debug\Krystalware.UploadHelper.pdb
+C:\Users\Daniel\Projects\Flutter\packages\AspNetUploadSamples\UploadHelper\obj\Debug\UploadHelper.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Projects\Flutter\packages\AspNetUploadSamples\UploadHelper\obj\Debug\Krystalware.UploadHelper.dll
+C:\Users\Daniel\Projects\Flutter\packages\AspNetUploadSamples\UploadHelper\obj\Debug\Krystalware.UploadHelper.pdb
