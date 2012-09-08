@@ -8,6 +8,8 @@ namespace SympleLib.Helpers
 {
     public static class ObjectHelpers
     {
+        //-- Up Cast
+
         public static T UpCast<T>(this object baseObject, params string[] excludeProps)
         {
             var sourceType = baseObject.GetType();
@@ -67,6 +69,7 @@ namespace SympleLib.Helpers
             }
         }
 
+        //-- Map To
 
         public static T MapTo<T>(this object baseObject)
         {
@@ -85,9 +88,26 @@ namespace SympleLib.Helpers
             }
             else
             {
-                    return Activator.CreateInstance<T>();
+                return Activator.CreateInstance<T>();
             }
 
+        }
+
+        public static void MapTo(this object baseObject, object destinationObject)
+        {
+            if (baseObject != null)
+            {
+                var baseType = baseObject.GetType();
+                var destinationType = destinationObject.GetType();
+
+                if (KnownMaps.Any(x => x.Item1 == baseType && x.Item2 == destinationType) != true)
+                {
+                    KnownMaps.Add(new Tuple<Type, Type>(baseType, destinationType));
+                    Mapper.CreateMap(baseType, destinationType);
+                }
+
+                Mapper.Map(baseObject, destinationObject, baseType, destinationType);
+            }
         }
 
         private static List<Tuple<Type, Type>> knownMaps;

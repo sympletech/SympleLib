@@ -21,7 +21,7 @@ namespace SympleLib.OpenXml
             get { return _headerRowNum; }
             set
             {
-                this.CurrentSheet.SheetView.FreezeRows(value);
+                //this.CurrentSheet.SheetView.FreezeRows(value);
                 _headerRowNum = value;
             }
         }
@@ -67,7 +67,7 @@ namespace SympleLib.OpenXml
         /// <returns></returns>
         public static XLSWorker Create(string path)
         {
-            return Create(path, false);
+            return Create(path, true);
         }
 
         /// <summary>
@@ -77,9 +77,13 @@ namespace SympleLib.OpenXml
         /// <returns></returns>        
         public static XLSWorker Create(string path, bool overwrite)
         {
-            if(File.Exists(path))
+            if (File.Exists(path))
             {
-                if(!overwrite)
+                if (overwrite)
+                {
+                    File.Delete(path);
+                }
+                else
                 {
                     throw new Exception("File Already Exists : " + path);
                 }
@@ -88,7 +92,13 @@ namespace SympleLib.OpenXml
             var xWorker = new XLSWorker()
             {
                 WorkBookPath = path,
+                WorkBook = new XLWorkbook()
             };
+
+            xWorker.WorkBook.Worksheets.Add("Sheet1");
+
+            xWorker.WorkSheets = xWorker.WorkBook.Worksheets;
+            xWorker.CurrentSheet = xWorker.WorkSheets.FirstOrDefault();
 
             return xWorker;
         }
@@ -271,14 +281,16 @@ namespace SympleLib.OpenXml
 
         public XLSRow AddNewRow()
         {
-            int last_row = this.CurrentSheet.LastRowUsed().RowNumber();
-            var xRow = this.InsertNewRow(last_row + 1);
+            int lastRow = (this.CurrentSheet.LastRowUsed() != null)
+                ? this.CurrentSheet.LastRowUsed().RowNumber()
+                : 0;
+            XLSRow xRow = this.InsertNewRow(lastRow + 1);
 
 
-
+            //Style the new row
             for (int i = 1; i <= Columns.Count(); i++)
             {
-                if (last_row % 2 == 0)
+                if (lastRow % 2 == 0)
                 {
                     RowStyle.ApplyTo(xRow[i].Style);
                 }
@@ -329,6 +341,9 @@ namespace SympleLib.OpenXml
 
         public void SaveAs(string path)
         {
+            this.WorkSheets.ForEach(x => x.Rows().AdjustToContents());
+            this.WorkSheets.ForEach(x => x.Columns().AdjustToContents());
+
             this.WorkBook.SaveAs(path);
             this.WorkBookPath = path;
         }
