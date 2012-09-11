@@ -1,0 +1,5 @@
+C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\fastJSON\bin\Debug\fastJSON.dll
+C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\fastJSON\bin\Debug\fastJSON.pdb
+C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\fastJSON\obj\Debug\fastJSON.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\fastJSON\obj\Debug\fastJSON.dll
+C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\fastJSON\obj\Debug\fastJSON.pdb
