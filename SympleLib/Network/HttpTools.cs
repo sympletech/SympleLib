@@ -12,19 +12,21 @@ namespace SympleLib.Network
 {
     public class HttpTools
     {
+        public enum RequestTypes { Get, Post, Put, Delete }
+
         public static string PerformGet(string url)
         {
-            WebRequest req = WebRequest.Create(url);
-            WebResponse resp = req.GetResponse();
-            StreamReader sr = new StreamReader(resp.GetResponseStream());
-            return sr.ReadToEnd().Trim();
+            HttpWebRequest wRequest = (HttpWebRequest)WebRequest.Create(url);
+            return PerformWebRequest(wRequest);
         }
+        
+
+        #region Post
 
         public static ReturnT PerformPost<ReturnT>(string url)
         {
             return PerformPost<object, ReturnT>(url, new object());
         }
-
         public static ReturnT PerformPost<PostT, ReturnT>(string url, PostT postData)
         {
             return PerformPost<PostT, ReturnT>(url, postData, new NameValueCollection());
@@ -52,57 +54,36 @@ namespace SympleLib.Network
 
             var response = HttpUploadHelper.Upload(req, postFiles.ToArray(), nvpPost);
 
-            using (Stream s = response.GetResponseStream())
-            using (StreamReader sr = new StreamReader(s))
+            string responseRaw = "";
+            //string responseRaw = PerformWebRequest(req);
+            try
             {
-                var responseJson = sr.ReadToEnd();
-                if (typeof(ReturnT) == typeof(string))
+                using (Stream s = response.GetResponseStream())
                 {
-                    return (ReturnT)Convert.ChangeType(responseJson, typeof(ReturnT));
+                    using (StreamReader sr = new StreamReader(s))
+                    {
+                        responseRaw = sr.ReadToEnd();
+                    }
                 }
-
-                return fastJSON.JSON.Instance.ToObject<ReturnT>(responseJson);
             }
+            catch (WebException ex)
+            {
+                using (WebResponse exResponse = ex.Response)
+                {
+                    StreamReader sReader = new StreamReader(response.GetResponseStream());
+                    responseRaw = sReader.ReadToEnd();
+                }
+            }
+
+            if (typeof(ReturnT) == typeof(string))
+            {
+                return (ReturnT)Convert.ChangeType(responseRaw, typeof(ReturnT));
+            }
+
+            return fastJSON.JSON.Instance.ToObject<ReturnT>(responseRaw);
         }
 
-
-        public static ReturnT PerformJsonRequest<PostT, ReturnT>(string url, string method, PostT postData)
-        {
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-            req.ContentType = "application/json";
-            req.Method = method;
-
-            StringBuilder sbJsonRequest = new StringBuilder();
-            var T = typeof(PostT);
-            foreach (var prop in T.GetProperties())
-            {
-                if (ObjectHelpers.NativeTypes.Contains(prop.PropertyType))
-                {
-                    sbJsonRequest.AppendFormat("\"{0}\":\"{1}\",", prop.Name.ToLower(), prop.GetValue(postData, null));
-                }
-            }
-
-            if (method != "get")
-            {
-                using (var sWriter = new StreamWriter(req.GetRequestStream()))
-                {
-                    sWriter.Write("{" + sbJsonRequest.ToString().TrimEnd(',') + "}");
-                }
-            }
-
-            using (var wResponse = req.GetResponse())
-            {
-                StreamReader sReader = new StreamReader(wResponse.GetResponseStream());
-                var responseJson = sReader.ReadToEnd();
-                if (typeof(ReturnT) == typeof(string))
-                {
-                    return (ReturnT)Convert.ChangeType(responseJson, typeof(ReturnT));
-                }
-
-                return fastJSON.JSON.Instance.ToObject<ReturnT>(responseJson);
-            }
-        }
-
+        //Converts an object to a name value collection (for posts)
         private static NameValueCollection ObjectToNameValueCollection<T>(T obj)
         {
             NameValueCollection results = new NameValueCollection();
@@ -121,5 +102,119 @@ namespace SympleLib.Network
 
             return results;
         }
+
+        #endregion
+
+        #region JSON Request
+
+        public static ReturnT PerformJsonRequest<ReturnT>(string url, RequestTypes method, object postData)
+        {
+            //Initilize the http request
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+            req.ContentType = "application/json";
+            req.Method = Enum.GetName(typeof(RequestTypes), method);
+
+
+            //If posting data - serialize it to a json object
+            if (method != RequestTypes.Get)
+            {
+                StringBuilder sbJsonRequest = new StringBuilder();
+                var T = postData.GetType();
+                foreach (var prop in T.GetProperties())
+                {
+                    if (ApprovedTypes.Contains(prop.PropertyType))
+                    {
+                        sbJsonRequest.AppendFormat("\"{0}\":\"{1}\",", prop.Name.ToLower(), prop.GetValue(postData, null));
+                    }
+                }
+
+                using (var sWriter = new StreamWriter(req.GetRequestStream()))
+                {
+                    sWriter.Write("{" + sbJsonRequest.ToString().TrimEnd(',') + "}");
+                }
+            }
+
+            //Submit the Http Request
+            string responseJson = "";
+            try
+            {
+                using (var wResponse = req.GetResponse())
+                {
+                    StreamReader sReader = new StreamReader(wResponse.GetResponseStream());
+                    responseJson = sReader.ReadToEnd();
+                }
+            }
+            catch (WebException ex)
+            {
+                using (WebResponse response = ex.Response)
+                {
+                    StreamReader sReader = new StreamReader(response.GetResponseStream());
+                    responseJson = sReader.ReadToEnd();
+                }
+            }
+
+            if (typeof(ReturnT) == typeof(string))
+            {
+                return (ReturnT)Convert.ChangeType(responseJson, typeof(ReturnT));
+            }
+
+            return fastJSON.JSON.Instance.ToObject<ReturnT>(responseJson);
+        }
+
+        //Approved Types for serialization
+        public static List<Type> ApprovedTypes
+        {
+            get
+            {
+                var approvedTypes = new List<Type>();
+
+                approvedTypes.Add(typeof(int));
+                approvedTypes.Add(typeof(Int32));
+                approvedTypes.Add(typeof(Int64));
+                approvedTypes.Add(typeof(string));
+                approvedTypes.Add(typeof(DateTime));
+                approvedTypes.Add(typeof(double));
+                approvedTypes.Add(typeof(decimal));
+                approvedTypes.Add(typeof(float));
+                approvedTypes.Add(typeof(List<>));
+                approvedTypes.Add(typeof(bool));
+                approvedTypes.Add(typeof(Boolean));
+
+                approvedTypes.Add(typeof(int?));
+                approvedTypes.Add(typeof(Int32?));
+                approvedTypes.Add(typeof(Int64?));
+                approvedTypes.Add(typeof(DateTime?));
+                approvedTypes.Add(typeof(double?));
+                approvedTypes.Add(typeof(decimal?));
+                approvedTypes.Add(typeof(float?));
+                approvedTypes.Add(typeof(bool?));
+                approvedTypes.Add(typeof(Boolean?));
+
+                return approvedTypes;
+            }
+        }
+
+        #endregion
+
+
+        private static string PerformWebRequest(HttpWebRequest wRequest)
+        {
+            string responseRaw = "";
+            try
+            {
+                WebResponse resp = wRequest.GetResponse();
+                StreamReader sr = new StreamReader(resp.GetResponseStream());
+                responseRaw = sr.ReadToEnd().Trim();
+            }
+            catch (WebException ex)
+            {
+                using (WebResponse response = ex.Response)
+                {
+                    StreamReader sReader = new StreamReader(response.GetResponseStream());
+                    responseRaw = sReader.ReadToEnd();
+                }
+            }
+            return responseRaw;
+        }    
     }
 }

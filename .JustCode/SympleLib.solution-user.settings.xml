@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<JustCodeSettings Version="0.0.9" Timestamp="f9ef9d7f-a2a8-44a2-ad07-1c5166612fc1">
+  <IgnoredErrorsAndWarningsSettings xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <IgnoredErrorsAndWarnings>
+      <FilePath>
+        <Path>F:\Projects\SympleLib\SympleLib\RavenDB\DataContext.cs</Path>
+        <ProjectFullName>F:\Projects\SympleLib\SympleLib\SympleLib.csproj</ProjectFullName>
+        <IgnoredElement>
+          <Column>36</Column>
+          <Text>Use normal property</Text>
+          <Line>51</Line>
+        </IgnoredElement>
+        <IgnoredElement>
+          <Column>36</Column>
+          <Text>Name does not match the naming convention. Suggested name 'Db'</Text>
+          <Line>51</Line>
+        </IgnoredElement>
+      </FilePath>
+    </IgnoredErrorsAndWarnings>
+  </IgnoredErrorsAndWarningsSettings>
+</JustCodeSettings>

@@ -80,3 +80,7 @@ C:\Users\Daniel\Projects\SympleLib\SympleJSLibTests\bin\Krystalware.UploadHelper
 C:\Users\Daniel\Projects\SympleLib\SympleJSLibTests\bin\fastJSON.dll
 C:\Users\Daniel\Projects\SympleLib\SympleJSLibTests\bin\Krystalware.UploadHelper.pdb
 C:\Users\Daniel\Projects\SympleLib\SympleJSLibTests\bin\fastJSON.pdb
+F:\Projects\SympleLib\SympleJSLibTests\bin\Krystalware.UploadHelper.dll
+F:\Projects\SympleLib\SympleJSLibTests\bin\fastJSON.dll
+F:\Projects\SympleLib\SympleJSLibTests\bin\Krystalware.UploadHelper.pdb
+F:\Projects\SympleLib\SympleJSLibTests\bin\fastJSON.pdb

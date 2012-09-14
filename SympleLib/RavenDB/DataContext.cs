@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Raven.Client;
+﻿using Raven.Client;
 using Raven.Client.Document;
-using Raven.Client.Indexes;
+using System;
 
 namespace SympleLib.RavenDB
 {
@@ -48,24 +45,20 @@ namespace SympleLib.RavenDB
             this._session.Advanced.AllowNonAuthoritativeInformation = false;
         }
 
+        private static DataContext _db{get;set;}
+        
         /// <summary>
-        /// Creates a new named Index in the Raven Database 
+        /// Singleton Instance of DataContext -- Assumes Connection String named "RavenDB"
         /// </summary>
-        /// <typeparam name="T">Type Of Object In Index</typeparam>
-        /// <param name="indexName">Name Of Index</param>
-        public void CreateIndex<T>(string indexName)
+        public static DataContext DB
         {
-            var exists = this._documentStore.DatabaseCommands.GetIndex(indexName) != null;
-            if (exists)
+            get
             {
-                this._documentStore.DatabaseCommands.ResetIndex(indexName);
-            }
-            else
-            {
-                this._documentStore.DatabaseCommands.PutIndex(indexName, new IndexDefinitionBuilder<T>
+                if (_db == null)
                 {
-                    Map = documents => documents.Select(entity => new { })
-                });
+                    _db = new DataContext("RavenDB", 30);
+                }
+                return _db;
             }
         }
 

@@ -6,10 +6,14 @@ namespace SympleLib.RavenDB
 {
     public class AttributeValidator
     {
-        public static void ValidateDataObject(IDataObject dataObj, ref DataObjectOperationResult result)
+        public static DataObjectOperationResult ValidateDataObject(DataObject dataObj)
         {
+            var result = new DataObjectOperationResult();
+
             CheckRequiredProperties(dataObj, ref result);
             CheckEMailProperties(dataObj, ref result);
+
+            return result;
         }
 
         private static void CheckRequiredProperties(IDataObject dataObj, ref DataObjectOperationResult result)
