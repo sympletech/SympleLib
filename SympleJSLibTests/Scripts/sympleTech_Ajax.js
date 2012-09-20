@@ -15,6 +15,7 @@ $.fn.sympleTech_ajaxlink = function (options) {
 
         $(this).click(function (e) {
             e.preventDefault();
+            e.stopPropagation();
             settings.showHideLoaderMethod(true);
             $.ajax({
                 url: href,

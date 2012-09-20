@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using Raven.Imports.Newtonsoft.Json;
+﻿using Raven.Imports.Newtonsoft.Json;
+using System;
 
 namespace SympleLib.RavenDB
 {
-    public class DataObject<T> : IDataObject where T : IDataObject
+    public class DataObject: IDataObject
     {
         //-- Properties
 
@@ -25,18 +23,32 @@ namespace SympleLib.RavenDB
 
         public DataObjectOperationResult Save()
         {
+            var result = AttributeValidator.ValidateDataObject(this);
+            if (result.Success == true)
+            {
+                Db.Session.Store(this);
+                return this.Commit();
+            }
+            return result;
+        }
+
+        public DataObjectOperationResult Delete()
+        {
+            Db.Session.Delete(this);
+            return this.Commit();
+        }
+
+        private DataObjectOperationResult Commit()
+        {
             var result = new DataObjectOperationResult();
             try
             {
-                AttributeValidator.ValidateDataObject(this, ref result);
-                if (result.Success == true)
-                {
-                    Db.Session.Store(this);
-                    Db.Session.SaveChanges();
+                Db.Session.Store(this);
+                Db.Session.SaveChanges();
 
-                    result.ObjectID = this.Id;
-                    result.Message = "Database Update Completed Successfully";
-                }
+                result.ObjectID = this.Id;
+                result.Success = true;
+                result.Message = "Database Update Completed Successfully";
             }
             catch (Exception ex)
             {
@@ -45,34 +57,6 @@ namespace SympleLib.RavenDB
             }
 
             return result;
-        }
-
-        public DataObjectOperationResult Delete()
-        {
-            try
-            {
-                Db.Session.Delete(this);
-                Db.Session.SaveChanges();
-
-                var results = new DataObjectOperationResult
-                {
-                    Message = "Object Has Been Deleted",
-                    ObjectID = this.Id,
-                    Success = true
-                };
-
-                this.Id = null;
-
-                return results;
-            }
-            catch (Exception Ex)
-            {
-                return new DataObjectOperationResult { 
-                    Success = false,
-                    Message = Ex.Message
-                };
-            }
-
         }
     }
 }

@@ -15,14 +15,14 @@ namespace SympleLib.OpenXml
         public IXLWorksheets WorkSheets { get; set; }
 
         public IXLWorksheet CurrentSheet { get; set; }
-        private int _headerRowNum;
+        private int headerRowNum;
         public int HeaderRowNum
         {
-            get { return _headerRowNum; }
+            get { return headerRowNum; }
             set
             {
                 //this.CurrentSheet.SheetView.FreezeRows(value);
-                _headerRowNum = value;
+                headerRowNum = value;
             }
         }
 
