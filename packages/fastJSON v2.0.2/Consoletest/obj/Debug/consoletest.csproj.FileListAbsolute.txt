@@ -1,8 +1,0 @@
-C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\consoletest\bin\Debug\consoletest.exe.config
-C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\consoletest\bin\Debug\consoletest.exe
-C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\consoletest\bin\Debug\consoletest.pdb
-C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\consoletest\bin\Debug\fastJSON.dll
-C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\consoletest\bin\Debug\fastJSON.pdb
-C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\consoletest\obj\Debug\consoletest.csprojResolveAssemblyReference.cache
-C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\consoletest\obj\Debug\consoletest.exe
-C:\Users\Daniel\Projects\Flutter\packages\fastJSON v2.0.2\consoletest\obj\Debug\consoletest.pdb

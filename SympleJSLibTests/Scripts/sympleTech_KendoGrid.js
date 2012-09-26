@@ -85,11 +85,11 @@ $.fn.sympleTech_KendoGrid = function (options) {
         exportUrl += "export=" + settings.exportName;
         var exportAnchor = "<a href='" + exportUrl + "' target='_blank'>Export</a>";
 
-        titleBar += '<div style="float:right">' + exportAnchor + "</div>";
+        //titleBar += '<div style="float:right">' + exportAnchor + "</div>";
 
-        titleBar += '<b>' + settings.title + '</b>';
+        //titleBar += '<b>' + settings.title + '</b>';
 
-        titleBar += '</div>';
+        //titleBar += '</div>';
         
 
         //-- Kendo Grid
