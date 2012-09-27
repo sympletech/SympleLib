@@ -135,23 +135,7 @@ namespace SympleLib.Network
             }
 
             //Submit the Http Request
-            string responseJson = "";
-            try
-            {
-                using (var wResponse = req.GetResponse())
-                {
-                    StreamReader sReader = new StreamReader(wResponse.GetResponseStream());
-                    responseJson = sReader.ReadToEnd();
-                }
-            }
-            catch (WebException ex)
-            {
-                using (WebResponse response = ex.Response)
-                {
-                    StreamReader sReader = new StreamReader(response.GetResponseStream());
-                    responseJson = sReader.ReadToEnd();
-                }
-            }
+            string responseJson = PerformWebRequest(req);
 
             if (typeof(ReturnT) == typeof(string))
             {

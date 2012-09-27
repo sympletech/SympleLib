@@ -102,6 +102,7 @@
     <Compile Include="Helpers\ObjectHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\DynamicSorter.cs" />
+    <Compile Include="MVC\Attributes\AutoRefreshAttribute.cs" />
     <Compile Include="MVC\HtmlHelpers.cs" />
     <Compile Include="MVC\KendoGridPost.cs" />
     <Compile Include="MVC\ListToSelectList.cs" />
