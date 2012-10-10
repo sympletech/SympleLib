@@ -84,3 +84,4 @@ F:\Projects\SympleLib\SympleJSLibTests\bin\Krystalware.UploadHelper.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\fastJSON.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\Krystalware.UploadHelper.pdb
 F:\Projects\SympleLib\SympleJSLibTests\bin\fastJSON.pdb
+F:\Projects\SympleLib\SympleJSLibTests\bin\Microsoft.Web.Infrastructure.xml

@@ -63,6 +63,9 @@
     <Reference Include="fastJSON">
       <HintPath>..\packages\fastJSON v2.0.2\fastJSON\bin\Debug\fastJSON.dll</HintPath>
     </Reference>
+    <Reference Include="HyperPropertyDescriptor">
+      <HintPath>..\packages\HyperPropertyDescriptor\HyperPropertyDescriptor.dll</HintPath>
+    </Reference>
     <Reference Include="Krystalware.UploadHelper">
       <HintPath>..\packages\UploadHelper\UploadHelper\bin\Release\Krystalware.UploadHelper.dll</HintPath>
     </Reference>
