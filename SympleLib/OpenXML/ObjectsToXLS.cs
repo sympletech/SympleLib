@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using SympleLib.Helpers;
+using System.ComponentModel;
 
 namespace SympleLib.OpenXml
 {
@@ -20,52 +21,45 @@ namespace SympleLib.OpenXml
             xWorker = XLSWorker.Create(saveTo, true);
         }
 
+
+        private PropertyDescriptorCollection objectProperties;
+
         public void AddSheet(IEnumerable<object> objectCollection, string sheetName)
         {
             AddSheet(objectCollection, sheetName, null);
         }
 
-        public void AddSheet(IEnumerable<object> objectCollection, string sheetName, IEnumerable<string> includeProperties)
+        public void AddSheet(IEnumerable<object> objectCollection, string sheetName, List<string> includeProperties)
         {
-            xWorker.AddNewSheet(sheetName);
-
             var objType = objectCollection.FirstOrDefault().GetType();
+            this.objectProperties = TypeDescriptor.GetProperties(objType);
 
-            var props = LoadProperties(includeProperties, objType);
-            xWorker.AddHeaderRow(props, 1);
-
-            ReadInRecords(objectCollection, props, objType);
-        }
-    
-        private List<string> LoadProperties(IEnumerable<string> includeProperties, Type objType)
-        {
-            List<string> iProps = includeProperties != null ? includeProperties.ToList() : new List<string>();
-
-            if (iProps.Count() == 0)
+            if (includeProperties == null)
             {
-                var objProperties = objType.GetProperties();
-                foreach (var prop in objProperties)
+                includeProperties = new List<string>();
+                foreach (PropertyDescriptor p in this.objectProperties)
                 {
-                    if (ObjectHelpers.NativeTypes.Contains(prop.PropertyType))
-                    {
-                        iProps.Add(prop.Name);
+                    if (ObjectHelpers.NativeTypes.Contains(p.PropertyType)){
+                        includeProperties.Add(p.Name);
                     }
                 }
             }
 
-            return iProps;
+            xWorker.AddNewSheet(sheetName);
+
+            xWorker.AddHeaderRow(includeProperties, 1);
+
+            ReadInRecords(objectCollection, includeProperties);
         }
 
-        private void ReadInRecords(IEnumerable<object> objectCollection, List<string> props, Type objType)
+        private void ReadInRecords(IEnumerable<object> objectCollection, List<string> props)
         {
             foreach (var row in objectCollection)
             {
                 var xRow = xWorker.AddNewRow();
                 foreach (var objProp in props)
                 {
-                    var oProp = objType.GetProperty(objProp);
-                    var pVal = oProp.GetValue(row, null);
-                    xRow[oProp.Name].Value = pVal;
+                    xRow[objProp].Value = (string)this.objectProperties[objProp].GetValue(row);
                 }
             }
         }
