@@ -165,6 +165,7 @@
     <Compile Include="RavenDB\IDataContext.cs" />
     <Compile Include="RavenDB\IDataObject.cs" />
     <Compile Include="RavenDB\AttributeValidator.cs" />
+    <Compile Include="Network\HttpTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

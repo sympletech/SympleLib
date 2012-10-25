@@ -16,6 +16,22 @@ namespace SympleJSLibTests.Controllers
             return View();
         }
 
+        public ActionResult MultiSelect()
+        {
+            return View();
+        }
+
+        public ActionResult Temp()
+        {
+            return View();
+        }
+
+        public JsonResult GetData()
+        {
+            var people = Person.PeopleCollection.AsQueryable();
+            return Json(people, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult DataSource(string search, bool? testBox)
         {
             var people = Person.PeopleCollection.AsQueryable();
