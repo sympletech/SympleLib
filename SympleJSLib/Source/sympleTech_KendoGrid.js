@@ -178,37 +178,22 @@ $.fn.sympleTech_KendoGrid = function (options) {
         //-- If MultiSelect add on click to the checkbox to select checked rows
         if (settings.multiSelectable === true) {
             $('.check_row').live('click', function (e) {
-                //Set all rows as unselected
-                //gData.tbody.find('tr').removeClass('k-state-selected');
-
-                //Get all the selected checkboxes
-                //var checkedBoxes = gData.tbody.find(".check_row:checked");
-
                 //Get Current Selected Values
                 var selectedVals = [];
                 var selectedRowIds = $this.attr('data-sympleTech-KendoGrid-selected');
                 if (selectedRowIds != null) {
-                    selectedVals.split(',');
+                    selectedVals = selectedRowIds.split(',');
                 }
 
-                var $row = $(this).parent('tr');
+                var $row = $(this).parents('.kendo-data-row').first();
                 var rowId = $row.attr('data-sympleTech-KendoGrid-rowid');
                 if ($(this).is(':checked')) {
                     $row.addClass('k-state-selected');
                     selectedVals.push(rowId);
                 } else {
+                    $row.removeClass('k-state-selected');
                     selectedVals = _.without(selectedVals, rowId);
                 }
-
-                //Loop through all selected boxes and set the row they live in as selected
-                $(checkedBoxes).each(function () {
-                    var selectedRow = $(this).parents("tr:first");
-                    selectedRow.addClass('k-state-selected');
-
-                    //Build an array of selected values
-                    var rowID = $(selectedRow).find('td:first').text();
-                    selectedVals.push(rowID);
-                });
 
                 //Set selected values to a custom data attribute on the grid
                 grid.attr('data-sympleTech-KendoGrid-selected', selectedVals);

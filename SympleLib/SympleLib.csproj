@@ -70,7 +70,7 @@
       <HintPath>..\packages\RavenDBClient\EmbeddedClient\Esent.Interop.dll</HintPath>
     </Reference>
     <Reference Include="fastJSON">
-      <HintPath>..\packages\fastJSON v2.0.2\fastJSON\bin\Debug\fastJSON.dll</HintPath>
+      <HintPath>..\packages\fastJSON v2.0.2\fastJSON.dll</HintPath>
     </Reference>
     <Reference Include="GeoAPI">
       <HintPath>..\packages\RavenDBClient\EmbeddedClient\GeoAPI.dll</HintPath>
@@ -85,7 +85,7 @@
       <HintPath>..\packages\RavenDBClient\EmbeddedClient\Jint.dll</HintPath>
     </Reference>
     <Reference Include="Krystalware.UploadHelper">
-      <HintPath>..\packages\UploadHelper\UploadHelper\bin\Release\Krystalware.UploadHelper.dll</HintPath>
+      <HintPath>..\packages\UploadHelper\Krystalware.UploadHelper.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\packages\RavenDBClient\EmbeddedClient\Lucene.Net.dll</HintPath>
