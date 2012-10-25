@@ -18,7 +18,9 @@ $.fn.sympleTech_KendoGrid = function (options) {
         'onRowSelected': function (id) { },
         'multiSelectable' : false,
         'searchForm': '',
-        'showExport': false
+        'showExport': false,
+        'height': null,
+        'dataBound' : function (e) { }
     }, options);
 
     return this.each(function () {
@@ -100,7 +102,8 @@ $.fn.sympleTech_KendoGrid = function (options) {
         }
 
         //-- Kendo Grid
-        var grid = $(this).kendoGrid({
+        var $this = $(this);
+        var grid = $this.kendoGrid({
             dataSource: gridDataSource,
             pageable: {
                 refresh: true,
@@ -109,12 +112,13 @@ $.fn.sympleTech_KendoGrid = function (options) {
             },
             sortable: true,
             resizable: true,
+            height: settings.height,
             selectable: (settings.rowSelectable === true) ? "row" : "",
             change: function (arg) {
                 var selected = $.map(this.select(), function (item) {
                     return $(item).find('td').first().text();
                 });
-                grid.attr('data-sympleTech-KendoGrid-selected', selectedVals);
+                $this.attr('data-sympleTech-KendoGrid-selected', selected[0]);
                 settings.onRowSelected(selected[0]);
 
             },
@@ -123,22 +127,42 @@ $.fn.sympleTech_KendoGrid = function (options) {
             dataBound: function (e) {
                 //Hide The First Column (the primary Key )
                 //Have to do this so you can then read it on the row select
-                grid.find(".k-grid-header colgroup col").first().hide();
-                grid.find(".k-grid-content colgroup col").first().hide();
-                grid.find("thead th").first().hide();
-                grid.find(".k-grid-content tbody tr").each(function () {
-                    $(this).find('td').first().hide();
+                $this.find(".k-grid-header colgroup col").first().hide();
+                $this.find(".k-grid-content colgroup col").first().hide();
+                $this.find("thead th").first().hide();
+                $this.find(".k-grid-content tbody tr").each(function () {
+                    var $hiddenCell = $(this).find('td').first();
+                    $hiddenCell.hide();
+                    $hiddenCell.parent('tr')
+                        .addClass('kendo-data-row')
+                        .attr("data-sympleTech-KendoGrid-rowid", $hiddenCell.text());
                     if (settings.rowSelectable == true) {
                         $(this).addClass('hoverable');
                     }
                 });
                 
                 //Remove any null entries
-                grid.find(".k-grid-content tbody tr td").each(function () {
+                $this.find(".k-grid-content tbody tr td").each(function () {
                     if($(this).html() == "null") {
                         $(this).html("");
                     }
                 });
+
+                //Mark any selected rows as selected (persists selections from page to page)
+                var selectedRowIds = $this.attr('data-sympleTech-KendoGrid-selected');
+                if (selectedRowIds != null) {
+                    var selectedRowIdArray = selectedRowIds.split(',');
+                    var visibleRows = $this.find('.kendo-data-row');
+                    $(visibleRows).each(function () {
+                        var rowID = $(this).attr('data-sympleTech-KendoGrid-rowid');
+                        if (_.contains(selectedRowIdArray, rowID)) {
+                            $(this).addClass('k-state-selected');
+                            $(this).find('.check_row').attr('checked', 'checked');
+                        }
+                    });
+                }
+
+                settings.dataBound(e);
             }
         });
 
@@ -155,13 +179,28 @@ $.fn.sympleTech_KendoGrid = function (options) {
         if (settings.multiSelectable === true) {
             $('.check_row').live('click', function (e) {
                 //Set all rows as unselected
-                gData.tbody.find('tr').removeClass('k-state-selected');
+                //gData.tbody.find('tr').removeClass('k-state-selected');
 
                 //Get all the selected checkboxes
-                var checkedBoxes = gData.tbody.find(".check_row:checked");
+                //var checkedBoxes = gData.tbody.find(".check_row:checked");
+
+                //Get Current Selected Values
+                var selectedVals = [];
+                var selectedRowIds = $this.attr('data-sympleTech-KendoGrid-selected');
+                if (selectedRowIds != null) {
+                    selectedVals.split(',');
+                }
+
+                var $row = $(this).parent('tr');
+                var rowId = $row.attr('data-sympleTech-KendoGrid-rowid');
+                if ($(this).is(':checked')) {
+                    $row.addClass('k-state-selected');
+                    selectedVals.push(rowId);
+                } else {
+                    selectedVals = _.without(selectedVals, rowId);
+                }
 
                 //Loop through all selected boxes and set the row they live in as selected
-                var selectedVals = [];
                 $(checkedBoxes).each(function () {
                     var selectedRow = $(this).parents("tr:first");
                     selectedRow.addClass('k-state-selected');
