@@ -34,18 +34,26 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ClosedXML.dll</HintPath>
     </Reference>
-    <Reference Include="Cobisi.EmailVerify, Version=4.6.1.0, Culture=neutral, PublicKeyToken=b863a804c9b2bdb0, processorArchitecture=MSIL" />
+    <Reference Include="Cobisi.Common">
+      <HintPath>..\packages\EmailVerify.NET\Cobisi.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Cobisi.EmailVerify">
+      <HintPath>..\packages\EmailVerify.NET\Cobisi.EmailVerify.dll</HintPath>
+    </Reference>
+    <Reference Include="Cobisi.EmailVerify.Design">
+      <HintPath>..\packages\EmailVerify.NET\Cobisi.EmailVerify.Design.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files (x86)\NUnit 2.5.10\bin\net-2.0\framework\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.mocks, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.mocks, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files (x86)\NUnit 2.5.10\bin\net-2.0\framework\nunit.mocks.dll</HintPath>
+      <HintPath>..\packages\NUnit\nunit.mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,6 +71,7 @@
     <Compile Include="OpenXml\XLSWorkerReadTests.cs" />
     <Compile Include="OpenXml\XLSWorkerWriteTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RavenDB\DataObjectTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SympleLib\SympleLib.csproj">

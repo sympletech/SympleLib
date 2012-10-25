@@ -7,16 +7,13 @@ namespace SympleLib.RavenDB
     {
         //-- Properties
 
-        [JsonIgnore]
-        public IDataContext Db { get; set; }
-
         public string Id { get; set; }
 
         //-- ReLoad
 
         public void Reload()
         {
-            Db.Session.Advanced.Refresh(this);
+            DataContext.Db.Session.Advanced.Refresh(this);
         }
 
         //-- CRUD
@@ -26,7 +23,7 @@ namespace SympleLib.RavenDB
             var result = AttributeValidator.ValidateDataObject(this);
             if (result.Success == true)
             {
-                Db.Session.Store(this);
+                DataContext.Db.Session.Store(this);
                 return this.Commit();
             }
             return result;
@@ -34,7 +31,7 @@ namespace SympleLib.RavenDB
 
         public DataObjectOperationResult Delete()
         {
-            Db.Session.Delete(this);
+            DataContext.Db.Session.Delete(this);
             return this.Commit();
         }
 
@@ -43,8 +40,8 @@ namespace SympleLib.RavenDB
             var result = new DataObjectOperationResult();
             try
             {
-                Db.Session.Store(this);
-                Db.Session.SaveChanges();
+                DataContext.Db.Session.Store(this);
+                DataContext.Db.Session.SaveChanges();
 
                 result.ObjectID = this.Id;
                 result.Success = true;
