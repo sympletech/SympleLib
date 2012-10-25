@@ -14,9 +14,11 @@ $.fn.sympleTech_KendoGrid = function (options) {
         },
         'columns': [],
         'pagesize': 10,
-        'rowSelectable': true,
+        'rowSelectable': false,
         'onRowSelected': function (id) { },
-        'searchForm': ''
+        'multiSelectable' : false,
+        'searchForm': '',
+        'showExport': false
     }, options);
 
     return this.each(function () {
@@ -72,25 +74,30 @@ $.fn.sympleTech_KendoGrid = function (options) {
         }
         
         //-- Title Bar
-
         var titleBar = '<div class="grid-title" style="min-height:20px;">';
 
         //-- Build Export Link
-        var exportUrl = settings.dataSourceURL;
-        if (exportUrl.indexOf('?') > -1) {
-            exportUrl += "&";
-        } else {
-            exportUrl += "?";
+        if (settings.showExport == true) {
+            var exportUrl = settings.dataSourceURL;
+            if (exportUrl.indexOf('?') > -1) {
+                exportUrl += "&";
+            } else {
+                exportUrl += "?";
+            }
+
+            exportUrl += "export=" + settings.exportName;
+            var exportAnchor = "<a href='" + exportUrl + "' target='_blank'>Export</a>";
+
+            titleBar += '<div style="float:right">' + exportAnchor + "</div>";
         }
-        exportUrl += "export=" + settings.exportName;
-        var exportAnchor = "<a href='" + exportUrl + "' target='_blank'>Export</a>";
 
-        //titleBar += '<div style="float:right">' + exportAnchor + "</div>";
-
-        //titleBar += '<b>' + settings.title + '</b>';
-
-        //titleBar += '</div>';
+        titleBar += '<b>' + settings.title + '</b>';
+        titleBar += '</div>';
         
+        //-- If MultiSelect add a checkbox to the first col
+        if (settings.multiSelectable === true) {
+            settings.columns.splice(1, 0, { field: "check_row", title: " ", width: 30, template: "<input class='check_row' type='checkbox' />" });
+        }
 
         //-- Kendo Grid
         var grid = $(this).kendoGrid({
@@ -102,12 +109,14 @@ $.fn.sympleTech_KendoGrid = function (options) {
             },
             sortable: true,
             resizable: true,
-            selectable: (settings.rowSelectable == true) ? "row" : "",
+            selectable: (settings.rowSelectable === true) ? "row" : "",
             change: function (arg) {
                 var selected = $.map(this.select(), function (item) {
                     return $(item).find('td').first().text();
                 });
+                grid.attr('data-sympleTech-KendoGrid-selected', selectedVals);
                 settings.onRowSelected(selected[0]);
+
             },
             toolbar: titleBar,
             columns: settings.columns,
@@ -134,10 +143,29 @@ $.fn.sympleTech_KendoGrid = function (options) {
         });
 
         //Bind reload Grid to the form post
+        var gData = grid.data("kendoGrid");
         if (settings.searchForm != "") {
             $("#" + settings.searchForm).submit(function (e) {
                 e.preventDefault();
-                grid.data("kendoGrid").dataSource.read();
+                gData.dataSource.read();
+            });
+        }
+
+        //-- If MultiSelect add on click to the checkbox to select checked rows
+        if (settings.multiSelectable === true) {
+            $('.check_row').live('click', function (e) {
+                gData.tbody.find('tr').removeClass('k-state-selected');
+                var checkedBoxes = gData.tbody.find(".check_row:checked");
+                var selectedVals = [];
+                $(checkedBoxes).each(function () {
+                    var selectedRow = $(this).parents("tr:first");
+                    var rowID = $(selectedRow).find('td:first').text();
+                    selectedVals.push(rowID);
+                    selectedRow.addClass('k-state-selected');
+                });
+                grid.attr('data-sympleTech-KendoGrid-selected', selectedVals);
+
+                settings.onRowSelected(selectedVals);
             });
         }
 

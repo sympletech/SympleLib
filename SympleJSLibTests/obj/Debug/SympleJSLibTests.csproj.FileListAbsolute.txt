@@ -1,7 +1,6 @@
 F:\Projects\SympleLib\SympleJSLibTests\bin\SympleJSLibTests.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\SympleJSLibTests.pdb
 F:\Projects\SympleLib\SympleJSLibTests\bin\Microsoft.Web.Infrastructure.dll
-F:\Projects\SympleLib\SympleJSLibTests\bin\Newtonsoft.Json.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\System.Net.Http.Formatting.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\System.Web.Helpers.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\System.Web.Http.dll
@@ -11,7 +10,6 @@ F:\Projects\SympleLib\SympleJSLibTests\bin\System.Web.Razor.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\System.Web.WebPages.Deployment.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\System.Web.WebPages.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\System.Web.WebPages.Razor.dll
-F:\Projects\SympleLib\SympleJSLibTests\bin\Newtonsoft.Json.xml
 F:\Projects\SympleLib\SympleJSLibTests\bin\System.Net.Http.Formatting.xml
 F:\Projects\SympleLib\SympleJSLibTests\bin\System.Web.Helpers.xml
 F:\Projects\SympleLib\SympleJSLibTests\bin\System.Web.Http.xml
@@ -83,3 +81,5 @@ C:\Users\Daniel\Projects\SympleLib\SympleJSLibTests\bin\fastJSON.pdb
 F:\Projects\SympleLib\SympleJSLibTests\bin\Krystalware.UploadHelper.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\fastJSON.dll
 F:\Projects\SympleLib\SympleJSLibTests\bin\Microsoft.Web.Infrastructure.xml
+F:\Projects\SympleLib\SympleJSLibTests\bin\Newtonsoft.Json.dll
+F:\Projects\SympleLib\SympleJSLibTests\bin\Newtonsoft.Json.xml

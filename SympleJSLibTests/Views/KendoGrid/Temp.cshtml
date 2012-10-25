@@ -1,0 +1,59 @@
+﻿<script type="text/javascript">
+    $(function () {
+        var gridDataSource = new kendo.data.DataSource({
+            transport: {
+                read: '/KendoGrid/GetData'
+            },
+            pageSize: 5
+        });
+
+        var grid = $("#kGrid").kendoGrid({
+            dataSource: gridDataSource,
+            columns: [
+                { field: "id" },
+                { field: "check_row", title: " ", width: 30, template: "<input class='check_row' type='checkbox' />" },
+                { field: "LastName", title: "Last Name", filterable: true, sortable: true, width: 300 },
+                { field: "FirstName", filterable: true, sortable: true },
+            ],
+            dataBound: function (e) {
+                //Hide The First Column (the primary Key )
+                //Have to do this so you can then read it on the row select
+                $(".k-grid .k-grid-header colgroup col").first().remove();
+                $(".k-grid .k-grid-content colgroup col").first().remove();
+                $(".k-grid thead th").first().hide();
+                $(".k-grid-content tbody tr").each(function () {
+                    $(this).find('td').first().hide();
+                });
+            }
+        });
+
+        $('.check_row').live('click', function (e) {
+            //Set all rows as unselected
+            grid.data("kendoGrid").tbody.find('tr').removeClass('k-state-selected');
+
+            //Get all the selected checkboxes
+            var checkedBoxes = grid.data("kendoGrid").tbody.find(".check_row:checked");
+
+            //Loop through all selected boxes and set the row they live in as selected
+            var selectedVals = [];
+            $(checkedBoxes).each(function () {
+                var selectedRow = $(this).parents("tr:first");
+                selectedRow.addClass('k-state-selected');
+
+                //Build an array of selected values
+                var rowID = $(selectedRow).find('td:first').text();
+                selectedVals.push(rowID);
+            });
+
+            //Set selected values to a custom data attribute on the grid
+            grid.attr('data-sympleTech-KendoGrid-selected', selectedVals);
+
+            var selectedVals = $("#kGrid").attr('data-sympleTech-KendoGrid-selected');
+            $("#results").html(selectedVals);
+        });
+    });
+</script>
+
+<div id="kGrid"></div>
+
+<div id="results"></div>

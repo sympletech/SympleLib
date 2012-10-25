@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Class for grid hovering -->
+<style type="text/css">
+     .hoverable:hover {
+         background: azure;
+         cursor: pointer;
+     }
+ </style>
+
+<script type="text/javascript">
+    $(function () {
+        var grid = $("#data-grid").sympleTech_KendoGrid(
+        {
+            title : "Sample Grid",
+            dataSourceURL: "/KendoGrid/DataSource/?test=1",
+            exportURL: "/KendoGrid/Export/",
+            model : {
+                fields: {
+                    BirthDate: { type: "date" }
+                }
+            },
+            columns: [
+                { field: "id" },
+                { field: "LastName", title: "Last Name", filterable: true, sortable: true, width: 300 },
+                { field: "FirstName", filterable: true, sortable: true },
+                { field: "City", filterable: true, sortable: true },
+                { field: "State", filterable: true, sortable: true },
+                { field: "BirthDate", filterable: true, sortable: true, format: "{0:MM/dd/yy}" },
+                { field: "IsAlive", filterable: true, sortable: true }
+            ],
+            pagesize: 16,
+            selectable: false,
+            multiSelectable: true,
+            onRowSelected: function (selIDs) {
+                $("#cur-selected").html(selIDs.join(','));
+            }
+        });
+    });        
+</script>
+
+
+
+<h2>sympleTech_KendoGrid.js Tests</h2>
+
+<div id="data-grid"></div>
+
+<div class="well">
+    <h3>Currently Selected</h3>
+    <p id="cur-selected"></p>
+</div>
