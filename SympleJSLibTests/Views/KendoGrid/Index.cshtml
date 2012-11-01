@@ -4,10 +4,11 @@
 
 <!-- Class for grid hovering -->
 <style type="text/css">
-     .hoverable:hover {
+     .k-grid-hover {
          background: azure;
          cursor: pointer;
      }
+
  </style>
 
 <script type="text/javascript">
@@ -25,7 +26,6 @@
                 }
             },
             columns: [
-                { field: "id" },
                 { field: "LastName", title: "Last Name", filterable: true, sortable: true, width: 300 },
                 { field: "FirstName", filterable: true, sortable: true },
                 { field: "City", filterable: true, sortable: true },

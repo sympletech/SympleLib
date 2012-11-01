@@ -75,9 +75,6 @@
     <Reference Include="GeoAPI">
       <HintPath>..\packages\RavenDBClient\EmbeddedClient\GeoAPI.dll</HintPath>
     </Reference>
-    <Reference Include="HyperPropertyDescriptor">
-      <HintPath>..\packages\HyperPropertyDescriptor\HyperPropertyDescriptor.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.NRefactory">
       <HintPath>..\packages\RavenDBClient\EmbeddedClient\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>

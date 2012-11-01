@@ -10,50 +10,35 @@
         var grid = $("#kGrid").kendoGrid({
             dataSource: gridDataSource,
             columns: [
-                { field: "id" },
-                { field: "check_row", title: " ", width: 30, template: "<input class='check_row' type='checkbox' />" },
                 { field: "LastName", title: "Last Name", filterable: true, sortable: true, width: 300 },
-                { field: "FirstName", filterable: true, sortable: true },
+                { field: "FirstName", filterable: true, sortable: true }
             ],
-            dataBound: function (e) {
-                //Hide The First Column (the primary Key )
-                //Have to do this so you can then read it on the row select
-                $(".k-grid .k-grid-header colgroup col").first().remove();
-                $(".k-grid .k-grid-content colgroup col").first().remove();
-                $(".k-grid thead th").first().hide();
-                $(".k-grid-content tbody tr").each(function () {
-                    $(this).find('td').first().hide();
-                });
+            dataBound: function () {
+                //Get the number of Columns in the grid
+                var colCount = $("#kGrid").find('.k-grid-header colgroup > col').length;
+
+                //If There are no results place an indicator row
+                if (gridDataSource._view.length == 0) {
+                    $("#kGrid").find('.k-grid-content tbody')
+                        .append('<tr class="kendo-data-row"><td colspan="' +
+                            colCount +
+                            '" style="text-align:center"><b>No Results Found!</b></td></tr>');
+                }
+
+                //Get visible row count
+                var rowCount = $("#kGrid").find('.k-grid-content tbody tr').length;
+
+                //If the row count is less that the page size add in the number of missing rows
+                if (rowCount < gridDataSource._take) {
+                    var addRows = gridDataSource._take - rowCount;
+                    for (var i = 0; i < addRows; i++) {
+                        $("#kGrid").find('.k-grid-content tbody')
+                            .append('<tr class="kendo-data-row"><td>&nbsp;</td></tr>');
+                    }
+                }
             }
-        });
-
-        $('.check_row').live('click', function (e) {
-            //Set all rows as unselected
-            grid.data("kendoGrid").tbody.find('tr').removeClass('k-state-selected');
-
-            //Get all the selected checkboxes
-            var checkedBoxes = grid.data("kendoGrid").tbody.find(".check_row:checked");
-
-            //Loop through all selected boxes and set the row they live in as selected
-            var selectedVals = [];
-            $(checkedBoxes).each(function () {
-                var selectedRow = $(this).parents("tr:first");
-                selectedRow.addClass('k-state-selected');
-
-                //Build an array of selected values
-                var rowID = $(selectedRow).find('td:first').text();
-                selectedVals.push(rowID);
-            });
-
-            //Set selected values to a custom data attribute on the grid
-            grid.attr('data-sympleTech-KendoGrid-selected', selectedVals);
-
-            var selectedVals = $("#kGrid").attr('data-sympleTech-KendoGrid-selected');
-            $("#results").html(selectedVals);
         });
     });
 </script>
 
 <div id="kGrid"></div>
-
-<div id="results"></div>

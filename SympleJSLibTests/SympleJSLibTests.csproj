@@ -626,6 +626,7 @@
     <Content Include="Scripts\sympleTech_Ajax.js" />
     <Content Include="Scripts\sympleTech_helpers.js" />
     <Content Include="Scripts\sympleTech_KendoGrid.js" />
+    <Content Include="Scripts\underscore-min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -636,6 +637,8 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\KendoGrid\MultiSelect.cshtml" />
+    <Content Include="Views\KendoGrid\Blog_Multiselect.cshtml" />
+    <Content Include="Views\KendoGrid\NoResults.cshtml" />
     <Content Include="Views\KendoGrid\Temp.cshtml" />
   </ItemGroup>
   <ItemGroup>

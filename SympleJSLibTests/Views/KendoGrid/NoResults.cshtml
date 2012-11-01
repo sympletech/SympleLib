@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "NoResults";
+}
+
+<script type="text/javascript">
+    $(function () {
+        var grid = $("#data-grid").sympleTech_KendoGrid(
+        {
+            title: "Sample Grid",
+            dataSourceURL: "/KendoGrid/EmptyDataSource/",
+            //dataSourceURL: "/KendoGrid/DataSource/",
+            columns: [
+                { field: "LastName", title: "Last Name", filterable: true, sortable: true, width: 300 },
+                { field: "FirstName", filterable: true, sortable: true },
+            ],
+            pagesize: 5,
+            dataBound: function (e, gridDataSource) {
+                //var colCount = $("#data-grid").find('.k-grid-header colgroup > col').length;
+
+                ////If There are no results place an indicator row
+                //if (gridDataSource._view.length == 0) {
+                //    $("#data-grid").find('.k-grid-content tbody')
+                //        .append('<tr class="kendo-data-row"><td colspan="' + colCount + '" style="text-align:center"><b>No Results Found!</b></td></tr>');
+                //}
+
+                ////Get visible row count
+                //var rowCount = $("#data-grid").find('.k-grid-content tbody tr').length;
+
+                ////If the row count is less that the page size add in the number of missing rows
+                //if (rowCount < gridDataSource._take) {
+                //    var addRows = gridDataSource._take - rowCount;
+                //    for (var i = 0; i < addRows; i++) {
+                //        $("#data-grid").find('.k-grid-content tbody')
+                //            .append('<tr class="kendo-data-row"><td>&nbsp;</td></tr>');
+                //    }
+                //}
+            }
+        });
+    });
+</script>
+
+<h2>sympleTech_KendoGrid.js Tests</h2>
+<div id="data-grid"></div>

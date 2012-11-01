@@ -20,6 +20,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
         'searchForm': '',
         'showExport': false,
         'height': null,
+        'primaryKey' : 'id',
         'dataBound' : function (e) { }
     }, options);
 
@@ -98,12 +99,12 @@ $.fn.sympleTech_KendoGrid = function (options) {
         
         //-- If MultiSelect add a checkbox to the first col
         if (settings.multiSelectable === true) {
-            settings.columns.splice(1, 0, { field: "check_row", title: " ", width: 30, template: "<input class='check_row' type='checkbox' />" });
+            settings.columns.splice(0, 0, { field: "check_row", title: " ", width: 30, template: "<input class='check_row' type='checkbox' />" });
         }
 
         //-- Kendo Grid
-        var $this = $(this);
-        var grid = $this.kendoGrid({
+        var $kGrid = $(this);
+        var grid = $kGrid.kendoGrid({
             dataSource: gridDataSource,
             pageable: {
                 refresh: true,
@@ -116,53 +117,88 @@ $.fn.sympleTech_KendoGrid = function (options) {
             selectable: (settings.rowSelectable === true) ? "row" : "",
             change: function (arg) {
                 var selected = $.map(this.select(), function (item) {
-                    return $(item).find('td').first().text();
+                    return $(item).attr('data-sympletech-kendogrid-rowid');
                 });
-                $this.attr('data-sympleTech-KendoGrid-selected', selected[0]);
+                $kGrid.attr('data-sympleTech-KendoGrid-selected', selected[0]);
                 settings.onRowSelected(selected[0]);
 
             },
             toolbar: titleBar,
             columns: settings.columns,
             dataBound: function (e) {
-                //Hide The First Column (the primary Key )
-                //Have to do this so you can then read it on the row select
-                $this.find(".k-grid-header colgroup col").first().hide();
-                $this.find(".k-grid-content colgroup col").first().hide();
-                $this.find("thead th").first().hide();
-                $this.find(".k-grid-content tbody tr").each(function () {
-                    var $hiddenCell = $(this).find('td').first();
-                    $hiddenCell.hide();
-                    $hiddenCell.parent('tr')
-                        .addClass('kendo-data-row')
-                        .attr("data-sympleTech-KendoGrid-rowid", $hiddenCell.text());
-                    if (settings.rowSelectable == true) {
-                        $(this).addClass('hoverable');
-                    }
-                });
-                
-                //Remove any null entries
-                $this.find(".k-grid-content tbody tr td").each(function () {
-                    if($(this).html() == "null") {
-                        $(this).html("");
-                    }
-                });
+                //Go Through Each visible row and add a data property with the unique ID from the dataset
+                $kGrid.find(".k-grid-content tbody tr").each(function () {
+                    var $tr = $(this);
 
-                //Mark any selected rows as selected (persists selections from page to page)
-                var selectedRowIds = $this.attr('data-sympleTech-KendoGrid-selected');
-                if (selectedRowIds != null) {
-                    var selectedRowIdArray = selectedRowIds.split(',');
-                    var visibleRows = $this.find('.kendo-data-row');
-                    $(visibleRows).each(function () {
-                        var rowID = $(this).attr('data-sympleTech-KendoGrid-rowid');
-                        if (_.contains(selectedRowIdArray, rowID)) {
-                            $(this).addClass('k-state-selected');
-                            $(this).find('.check_row').attr('checked', 'checked');
+                    //Get the kendo uid and then match it to the entry in the dataset
+                    var uid = $tr.attr("data-uid");
+                    var data_entry = _.find(gridDataSource._data, function (data_source) {
+                        return data_source.uid === uid;
+                    });
+                    var id = eval('data_entry.' + settings.primaryKey);
+                    $tr.addClass('kendo-data-row').attr("data-sympleTech-KendoGrid-rowid", id);
+
+                    //Remove any null entries (otherwise it displays NULL in the field)
+                    $tr.find('td').each(function () {
+                        if ($(this).html() == "null") {
+                            $(this).html("");
                         }
                     });
+                });
+
+                if (settings.multiSelectable === true) {
+                    //Mark any selected rows as selected (persists selections from page to page)
+                    var selectedRowIds = $kGrid.attr('data-sympleTech-KendoGrid-selected');
+                    if (selectedRowIds != null) {
+                        var selectedRowIdArray = selectedRowIds.split(',');
+                        var visibleRows = $kGrid.find('.kendo-data-row');
+                        $(visibleRows).each(function () {
+                            $row = $(this);
+                            var rowID = $row.attr('data-sympleTech-KendoGrid-rowid');
+                            if (_.contains(selectedRowIdArray, rowID)) {
+                                $row.addClass('k-state-selected');
+                                $row.find('.check_row').attr('checked', 'checked');
+                            }
+                        });
+                    }
                 }
 
-                settings.dataBound(e);
+                if (settings.rowSelectable == true) {
+                    $kGrid.find(".k-grid-content tbody tr")
+                        .css('cursor', 'pointer')
+                        .hover(
+                            function () {
+                                $(this).addClass('k-grid-hover');
+                            },
+                            function () {
+                                $(this).removeClass('k-grid-hover');
+                            }
+                        );
+                }
+
+                //Get the current column Count
+                var colCount = $("#data-grid").find('.k-grid-header colgroup > col').length;
+
+                //If There are no results place an indicator row
+                if (gridDataSource._view.length == 0) {
+                    $kGrid.find('.k-grid-content tbody')
+                        .append('<tr class="kendo-data-row"><td colspan="' + colCount + '" style="text-align:center"><b>No Results Found!</b></td></tr>');
+                }
+
+                //Get visible row count
+                var rowCount = $kGrid.find('.k-grid-content tbody tr').length;
+
+                //If the row count is less that the page size add in the number of missing rows
+                if (rowCount < gridDataSource._take) {
+                    var addRows = gridDataSource._take - rowCount;
+                    for (var i = 0; i < addRows; i++) {
+                        $kGrid.find('.k-grid-content tbody')
+                            .append('<tr class="kendo-data-row"><td>&nbsp;</td></tr>');
+                    }
+                }
+
+                //Call the user function presented for on databound
+                settings.dataBound(e, gridDataSource);
             }
         });
 
@@ -180,7 +216,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
             $('.check_row').live('click', function (e) {
                 //Get Current Selected Values
                 var selectedVals = [];
-                var selectedRowIds = $this.attr('data-sympleTech-KendoGrid-selected');
+                var selectedRowIds = $kGrid.attr('data-sympleTech-KendoGrid-selected');
                 if (selectedRowIds != null) {
                     selectedVals = selectedRowIds.split(',');
                 }
@@ -196,6 +232,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
                 }
 
                 //Set selected values to a custom data attribute on the grid
+                selectedVals = _.without(selectedVals, '', null);
                 grid.attr('data-sympleTech-KendoGrid-selected', selectedVals);
 
                 //Call the on selected function set by caller

@@ -1,0 +1,77 @@
+﻿<script type="text/javascript">
+    $(function () {
+        var gridDataSource = new kendo.data.DataSource({
+            transport: {
+                read: '/KendoGrid/GetData'
+            },
+            pageSize: 5
+        });
+
+        var $kgrid = $("#kGrid");
+        var grid = $("#kGrid").kendoGrid({
+            dataSource: gridDataSource,
+            pageable: true,
+            columns: [
+                { field: "check_row", title: " ", width: 30, template: "<input class='check_row' type='checkbox' />" },
+                { field: "LastName", title: "Last Name", filterable: true, sortable: true, width: 300 },
+                { field: "FirstName", filterable: true, sortable: true },
+            ],
+            dataBound: function (e) {
+                //Go Through Each visible row and add a data property with the unique ID from the dataset
+                $(".k-grid-content tbody tr").each(function () {
+                    var $tr = $(this);
+                    var uid = $tr.attr("data-uid");
+                    var data_entry = _.find(gridDataSource._data, function (data_source) {
+                        return data_source.uid === uid;
+                    });
+                    $tr.addClass('kendo-data-row').attr('data-sympleTech-KendoGrid-rowid', data_entry.id);
+                });
+
+                //Mark any selected rows as selected (persists selections from page to page)
+                var selectedRowIds = $kgrid.attr('data-sympleTech-KendoGrid-selected');
+                if (selectedRowIds != null) {
+                    var selectedRowIdArray = selectedRowIds.split(',');
+                    var visibleRows = $kgrid.find('.kendo-data-row');
+                    $(visibleRows).each(function () {
+                        $row = $(this);
+                        var rowID = $row.attr('data-sympleTech-KendoGrid-rowid');
+                        if (_.contains(selectedRowIdArray, rowID)) {
+                            $row.addClass('k-state-selected');
+                            $row.find('.check_row').attr('checked', 'checked');
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    $('.check_row').live('click', function (e) {
+        var $kgrid = $("#kGrid");
+        var $cb = $(this);
+
+        //Get Current Selected Values
+        var selectedVals = [];
+        var selectedRowIds = $kgrid.attr('data-sympleTech-KendoGrid-selected');
+        if (selectedRowIds != null) {
+            selectedVals = selectedRowIds.split(',');
+        }
+
+        var $row = $cb.parents('.kendo-data-row').first();
+        var rowId = $row.attr('data-sympleTech-KendoGrid-rowid');
+        if ($cb.is(':checked')) {
+            $row.addClass('k-state-selected');
+            selectedVals.push(rowId);
+        } else {
+            $row.removeClass('k-state-selected');
+            selectedVals = _.without(selectedVals, rowId);
+        }
+
+        //Set selected values to a custom data attribute on the grid
+        $kgrid.attr('data-sympleTech-KendoGrid-selected', selectedVals);
+
+        
+    });
+
+</script>
+
+<div id="kGrid"></div>

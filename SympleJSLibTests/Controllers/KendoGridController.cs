@@ -21,6 +21,11 @@ namespace SympleJSLibTests.Controllers
             return View();
         }
 
+        public ActionResult NoResults()
+        {
+            return View();
+        }
+
         public ActionResult Temp()
         {
             return View();
@@ -28,7 +33,8 @@ namespace SympleJSLibTests.Controllers
 
         public JsonResult GetData()
         {
-            var people = Person.PeopleCollection.AsQueryable();
+            var people = new List<Person>();
+            people.Add(new Person { LastName="Alone", FirstName="All" });
             return Json(people, JsonRequestBehavior.AllowGet);
         }
 
@@ -45,6 +51,14 @@ namespace SympleJSLibTests.Controllers
             }
 
             var dataSource = KendoUiHelper.ParseGridData<Person>(people);
+            return Json(dataSource, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult EmptyDataSource()
+        {
+            var people = new List<Person>();
+            var dataSource = KendoUiHelper.ParseGridData<Person>(people.AsQueryable());
             return Json(dataSource, JsonRequestBehavior.AllowGet);
         }
     }
