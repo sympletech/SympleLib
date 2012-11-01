@@ -58,6 +58,7 @@ namespace SympleJSLibTests.Controllers
         public JsonResult EmptyDataSource()
         {
             var people = new List<Person>();
+            people.Add(new Person { LastName = "Alone", FirstName = "All" });
             var dataSource = KendoUiHelper.ParseGridData<Person>(people.AsQueryable());
             return Json(dataSource, JsonRequestBehavior.AllowGet);
         }

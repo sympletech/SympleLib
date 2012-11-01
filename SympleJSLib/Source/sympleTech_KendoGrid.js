@@ -30,10 +30,13 @@ $.fn.sympleTech_KendoGrid = function (options) {
         var formParams = {};
         if (settings.searchForm != "") {
             var $form = $("#" + settings.searchForm);
-            var formData = $form.serialize().split('&');
 
-            $(formData).each(function () {
-                var nvp = this.split('=');
+            //Serialize the form into an array
+            var formData = $form.serialize().split('&');
+            _.each(formData, function (formItem) {
+                var nvp = formItem.split('=');
+
+                //Set the form param to a function to look up the current value of the element
                 formParams[nvp[0]] = function () {
                     var $inputEl = $form.find('*[name=' + nvp[0] + ']').first();
 
@@ -117,11 +120,17 @@ $.fn.sympleTech_KendoGrid = function (options) {
             selectable: (settings.rowSelectable === true) ? "row" : "",
             change: function (arg) {
                 var selected = $.map(this.select(), function (item) {
-                    return $(item).attr('data-sympletech-kendogrid-rowid');
+                    var $item = $(item);
+                    if ($item.hasClass('sympletech-noclick')) {
+                        $item.removeClass('k-state-selected');
+                    } else {
+                        return $(item).attr('data-sympletech-kendogrid-rowid');
+                    } 
                 });
-                $kGrid.attr('data-sympleTech-KendoGrid-selected', selected[0]);
-                settings.onRowSelected(selected[0]);
-
+                if (selected[0] != null) {
+                    $kGrid.attr('data-sympleTech-KendoGrid-selected', selected[0]);
+                    settings.onRowSelected(selected[0]);
+                }
             },
             toolbar: titleBar,
             columns: settings.columns,
@@ -182,7 +191,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
                 //If There are no results place an indicator row
                 if (gridDataSource._view.length == 0) {
                     $kGrid.find('.k-grid-content tbody')
-                        .append('<tr class="kendo-data-row"><td colspan="' + colCount + '" style="text-align:center"><b>No Results Found!</b></td></tr>');
+                        .append('<tr class="kendo-data-row sympletech-noclick"><td colspan="' + colCount + '" style="text-align:center"><b>No Results Found!</b></td></tr>');
                 }
 
                 //Get visible row count
@@ -193,7 +202,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
                     var addRows = gridDataSource._take - rowCount;
                     for (var i = 0; i < addRows; i++) {
                         $kGrid.find('.k-grid-content tbody')
-                            .append('<tr class="kendo-data-row"><td>&nbsp;</td></tr>');
+                            .append('<tr class="kendo-data-row sympletech-noclick"><td>&nbsp;</td></tr>');
                     }
                 }
 
@@ -207,6 +216,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
         if (settings.searchForm != "") {
             $("#" + settings.searchForm).submit(function (e) {
                 e.preventDefault();
+                gData.dataSource.page(1);
                 gData.dataSource.read();
             });
         }
