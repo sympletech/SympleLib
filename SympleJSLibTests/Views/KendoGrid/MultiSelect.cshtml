@@ -34,8 +34,8 @@
             pagesize: 5,
             selectable: false,
             multiSelectable: true,
-            onRowSelected: function (selIDs) {
-                $("#cur-selected").html(selIDs.join(','));
+            onRowSelected: function (selectedId, isChecked, selectedVals) {
+                $("#cur-selected").html(selectedVals.join(','));
             }
         });
     });        

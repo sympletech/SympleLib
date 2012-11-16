@@ -15,7 +15,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
         'columns': [],
         'pagesize': 10,
         'rowSelectable': false,
-        'onRowSelected': function (id) { },
+        'onRowSelected': function (selectedId, isChecked, selectedVals) { },
         'multiSelectable' : false,
         'searchForm': '',
         'showExport': false,
@@ -129,14 +129,27 @@ $.fn.sympleTech_KendoGrid = function (options) {
                 });
                 if (selected[0] != null) {
                     $kGrid.attr('data-sympleTech-KendoGrid-selected', selected[0]);
-                    settings.onRowSelected(selected[0]);
+                    settings.onRowSelected(selected[0], true, selected[0]);
                 }
             },
             toolbar: titleBar,
             columns: settings.columns,
             dataBound: function (e) {
+                _.each(e.sender._data, function (entry) {
+                    var keys = Object.keys(entry);
+                    _.each(keys, function (key) {
+                        var caller = entry + '.' + key;
+                        if (eval(caller) == null) {
+                            eval(caller) = "";
+                        }
+                    });
+                });
+
                 //Go Through Each visible row and add a data property with the unique ID from the dataset
                 $kGrid.find(".k-grid-content tbody tr").each(function () {
+
+
+
                     var $tr = $(this);
 
                     //Get the kendo uid and then match it to the entry in the dataset
@@ -233,7 +246,8 @@ $.fn.sympleTech_KendoGrid = function (options) {
 
                 var $row = $(this).parents('.kendo-data-row').first();
                 var rowId = $row.attr('data-sympleTech-KendoGrid-rowid');
-                if ($(this).is(':checked')) {
+                var isChecked = $(this).is(':checked');
+                if (isChecked) {
                     $row.addClass('k-state-selected');
                     selectedVals.push(rowId);
                 } else {
@@ -246,7 +260,7 @@ $.fn.sympleTech_KendoGrid = function (options) {
                 grid.attr('data-sympleTech-KendoGrid-selected', selectedVals);
 
                 //Call the on selected function set by caller
-                settings.onRowSelected(selectedVals);
+                settings.onRowSelected(rowId, isChecked, selectedVals);
             });
         }
 

@@ -589,6 +589,7 @@
     <Content Include="Scripts\kendo.columnmenu.min.js" />
     <Content Include="Scripts\kendo.combobox.min.js" />
     <Content Include="Scripts\kendo.core.min.js" />
+    <Content Include="Scripts\kendo.data.js" />
     <Content Include="Scripts\kendo.data.min.js" />
     <Content Include="Scripts\kendo.data.odata.min.js" />
     <Content Include="Scripts\kendo.data.xml.min.js" />
@@ -640,6 +641,7 @@
     <Content Include="Views\KendoGrid\Blog_Multiselect.cshtml" />
     <Content Include="Views\KendoGrid\NoResults.cshtml" />
     <Content Include="Views\KendoGrid\Temp.cshtml" />
+    <Content Include="Views\KendoGrid\NoCaseSort.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -53,6 +53,19 @@ namespace SympleLib.MVC
                 gridData = collection.Skip(requestParams.Skip).Take(requestParams.PageSize).ToList();
             }
 
+            //var collectionType = typeof(T);
+            //var collectionProperties = collectionType.GetProperties();
+            //gridData.ForEach(row => {
+            //    foreach (var cProp in collectionProperties)
+            //    {
+            //        var pVal = cProp.GetValue(row, null);
+            //        if (pVal == null)
+            //        {
+            //            cProp.SetValue(row, "", null);
+            //        }
+            //    }
+            //});
+
             return new KendoGridResult<T>
             {
                 Items = gridData,

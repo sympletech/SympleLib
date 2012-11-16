@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "NoCaseSort";
+}
+
+<script type="text/javascript">
+    //-- http://james.padolsey.com/javascript/monitoring-dom-properties/
+    jQuery.fn.watch = function (id, fn) {
+        return this.each(function () {
+            var self = this;
+            var oldVal;
+            if (id === 'html') {
+                oldVal = jQuery(this).html();
+            } else {
+                oldVal = self[id];
+            }
+
+            $(self).data(
+                'watch_timer',
+                setInterval(function () {
+                    var newVal;
+                    if (id === 'html') {
+                        newVal = jQuery(self).html();
+                    } else {
+                        newVal = self[id];
+                    }
+                    if (newVal !== oldVal) {
+                        fn.call(self, id, oldVal, self[id]);
+                        oldVal = newVal;
+                    }
+                }, 100)
+            );
+        });
+        return self;
+    };
+
+    $(function () {
+        //-- Hard Coded Data Source
+        var myData = [
+            { name: "quam sit amet imperdiet.", desc: "ligula mattis scelerisque" },
+            { name: "Quam sit amet imperdiet.", desc: "Ligula mattis scelerisque" },
+            { name: "qaam sit amet imperdiet.", desc: "Ligula mattis scelerisque" },
+            { name: "QAam sit amet imperdiet.", desc: "ligula mattis scelerisque" },
+            { name: "suscipit viverra arcu bibendum eu.", desc: "latora torquent per conubia nostra" },
+            { name: "Suscipit viverra arcu bibendum eu.", desc: "Litora torquent per conubia nostra" },
+            { name: "sAscipit viverra arcu bibendum eu.", desc: "Litora torquent per conubia nostra" },
+            { name: "Sascipit viverra arcu bibendum eu.", desc: "lztora torquent per conubia nostra" },
+            { name: "risus tincidunt in rutrum nunc congue", desc: "gravida dapibus" },
+            { name: "Risus tincidunt in rutrum nunc congue", desc: "Gravida dapibus" },
+            { name: "rAsus tincidunt in rutrum nunc congue", desc: "Gravida dapibus" },
+            { name: "Rasus tincidunt in rutrum nunc congue", desc: "gravida dapibus" },
+        ];
+
+        var $grid = $("#kGrid");
+
+        var gridDataSource = new kendo.data.DataSource({
+            data: myData,
+            pageSize: 5
+        });
+
+        var grid = $grid.kendoGrid({
+            dataSource: gridDataSource,
+            columns: [
+                { field: "name", title: "Name Field", sortable: true },
+                { field: "desc", title: "Desc Field", sortable: true }
+            ],
+            sortable: true,
+            pageable: true
+        });
+
+        //Read through the datasource and create a lowercase col for each sortable col
+        var gData = grid.data("kendoGrid");
+        var ds = gData.dataSource;
+        var sortableCols = [];
+        $(".k-header[data-role='sortable']", $grid).each(function () {
+            var $sortHeader = $(this);
+            sortableCols.push($sortHeader.attr('data-field'));
+        });
+        _.each(ds._data, function (dItem) {
+            _.each(sortableCols, function(sCol){
+                eval("dItem." + sCol + "_lower = dItem." + sCol + ".toLowerCase()");
+            });
+        });
+
+        //On Sortable Row Click re-sort using the lowercase field
+        $(".k-header[data-role='sortable']", $grid).click(function (e) {
+            var $sortHeader = $(this);
+            var sortOn = $sortHeader.attr('data-field');
+            var sortOrd = 'asc';
+
+            //Get current sorting settings
+            var curSortOn = grid.attr('data-sympletech-curSortOn');
+            var curSortOrd = grid.attr('data-sympletech-curSortOrd');
+
+            //Toggle sort order
+            if (curSortOn == sortOn && curSortOrd == 'asc') {
+                sortOrd = 'desc';
+            }
+
+            //Add in a tracking property so we can keep track of how we last sorted the grid
+            grid.attr('data-sympletech-curSortOn', sortOn);
+            grid.attr('data-sympletech-curSortOrd', sortOrd);
+
+            //Perform the sort on lowercase property
+            ds.sort({ field: sortOn + "_lower", dir: sortOrd });
+        });
+
+        //If the contents of the visible grid page changes re-draw the sort aarows
+        $('.k-grid-content tbody', $grid).watch('html', function (propName, oldVal, newVal) {
+            var curSortOn = $grid.attr('data-sympletech-curSortOn');
+            if (curSortOn != null) {
+                var curSortOrd = $grid.attr('data-sympletech-curSortOrd');
+
+                var iconName = "k-i-arrow-n";
+                if (curSortOrd == 'desc') {
+                    iconName = "k-i-arrow-s";
+                }
+
+                var $sortHeader = $grid.find('th[data-field = "' + curSortOn + '"]');
+                $sortHeader.remove('.k-icon');
+                $sortHeader.find('.k-link').append('<span class="k-icon ' + iconName + '"></span>');
+            }
+        });
+    });
+</script>
+
+<div id="kGrid"></div>

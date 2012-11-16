@@ -62,6 +62,14 @@ namespace SympleJSLibTests.Controllers
             var dataSource = KendoUiHelper.ParseGridData<Person>(people.AsQueryable());
             return Json(dataSource, JsonRequestBehavior.AllowGet);
         }
+
+
+
+
+        public ActionResult NoCaseSort()
+        {
+            return View();
+        }
     }
 
     public class Person
@@ -71,7 +79,7 @@ namespace SympleJSLibTests.Controllers
         public string FirstName { get; set; }
         public string City { get; set; }
         public string State { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public bool IsAlive { get; set; }
 
         public static IEnumerable<Person> PeopleCollection
@@ -79,7 +87,7 @@ namespace SympleJSLibTests.Controllers
             get
             {
                 var people = new List<Person>();
-                people.Add(new Person { LastName = null, FirstName = "John", City = "Johnson", State = "NB", BirthDate = DateTime.Parse("1/1/1950"), IsAlive = true });
+                people.Add(new Person { LastName = null, FirstName = "John", City = "Johnson", State = "NB", BirthDate = null, IsAlive = true });
                 people.Add(new Person { LastName = "Hankok", FirstName = "John", City = "Pennsylivania", State = "PN", BirthDate = DateTime.Parse("2/1/1980"), IsAlive = true });
                 people.Add(new Person { LastName = "Mayfield", FirstName = "Curtis", City = "SoulTown", State = "NO", BirthDate = DateTime.Parse("1/1/1950"), IsAlive = true });
                 people.Add(new Person { LastName = "Wooten", FirstName = "Victor", City = "Salem", State = "OR", BirthDate = DateTime.Parse("1/1/1950"), IsAlive = true });
